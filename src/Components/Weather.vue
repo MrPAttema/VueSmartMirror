@@ -37,14 +37,14 @@ export default {
     },
     methods: {
         getWeatherData() {
-            axios.get('http://api.wunderground.com/api/ee1f1a8cb9899e1b/conditions/geolookup/forecast/lang:NL/q/zmw:00000.1.06270.json')
+            axios.get('http://api.wunderground.com/api/ee1f1a8cb9899e1b/conditions/geolookup/alerts/forecast/lang:NL/q/zmw:00000.1.06270.json')
             .then(response => {
                 console.log(response.data)
                 this.currentweather = response.data.current_observation
                 this.currentweatherIcon = response.data.current_observation.icon
                 this.forecast = response.data.forecast
                 this.location = response.data.location
-                // return this.$store.getters.getWeatherData
+                return this.$store.getters.getWeatherData
             })
         }
     },

@@ -1,12 +1,22 @@
 <template>
-  <div id="home">
+    <div id="home">
+        <div class="notify-container">
+            <div class="special-messages">
+                <div class="notify-icon">
+                    <img :src="require('./assets/icons/info.png')" alt="">
+                </div>
+                <div class="notify-message">
+                    <span class="message">Waarchuwing voor onweer</span>
+                </div>
+            </div>
+        </div>
         <div class="grid-container">
             <Weather/>
             <div class="grid-item"></div>
             <!-- <div class="grid-item"></div> -->
             <News/>
         </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -34,12 +44,49 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700|Roboto:300,400,500,700');
+@import './assets/styles/all';
 
 body, html {
     margin: 0;
     padding: 0;
     background-color: black;
     font-family: 'Open Sans', sans-serif;
+}
+.notify-container {
+    width: 90%;
+    margin: 0 auto;
+    .special-messages {
+        height: 50px;
+        padding: 0px 10px;      
+        color: white;
+        margin: 0 auto;
+        overflow: hidden;
+        .notify-message {
+            overflow: hidden;
+            background: $alert-yellow;
+            border-bottom-right-radius: 10px;
+            padding-left: 10px;
+            .message {
+                line-height: 50px;
+                font-size: 17px;
+                font-weight: 600;       
+            }
+        }
+        .notify-icon {
+            height: 50px;
+            width: 60px;
+            float: left;
+            background-color: $alert-normal;
+            border-bottom-left-radius: 10px;
+            img {
+                height: 65%;
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
 }
 
 #home {
