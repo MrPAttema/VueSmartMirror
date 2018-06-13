@@ -1,9 +1,11 @@
 <template>
   <div id="home">
-      <div class="grid-container">
-
-    <Weather/>
-      </div>
+        <div class="grid-container">
+            <Weather/>
+            <div class="grid-item"></div>
+            <!-- <div class="grid-item"></div> -->
+            <News/>
+        </div>
   </div>
 </template>
 
@@ -12,11 +14,15 @@ import axios from 'axios'
 import variables from './variables'
 
 import Weather from './Components/Weather.vue';
+import News from './Components/News.vue';
+import Clock from './Components/Clock.vue';
 
 export default {
   name: 'home',
     components: {
-        Weather
+        Weather,
+        News,
+        Clock
     },
   data () {
     return {
@@ -44,13 +50,14 @@ body, html {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(250px, 350px);
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 7em 10px;
+  grid-auto-rows: minmax(250px, auto);
+  grid-auto-flow: row;
 }
 
 .grid-item {
-    padding: 1em;
+    padding: 0.5em;
     position: relative;
 }
 

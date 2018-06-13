@@ -1,8 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Home from './Home.vue'
+import store from './store'
+
+Vue.filter('capitalize', function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+})
 
 new Vue({
-  el: '#home',
-  render: h => h(Home)
+    store,
+    el: '#home',
+    render: h => h(Home)
 })
