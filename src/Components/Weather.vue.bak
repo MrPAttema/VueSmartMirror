@@ -1,12 +1,15 @@
 <template>
     <div class="grid-item">
+        <div v-if="loading">
+            <span>Bezig met laden..</span>
+        </div>
         <div class="weather">
             <div class="data">
                 <div class="temprature">
                     {{ currentweather.temp_c }} &deg;C
                 </div>
                 <div class="weather-text">
-                    <span>{{ forecast.txt_forecast.forecastday[0].title | capitalize }}: {{ forecast.txt_forecast.forecastday[0].fcttext_metric }}</span>
+                    <!-- <span>{{ forecast.txt_forecast.forecastday[0].title | capitalize }}: {{ forecast.txt_forecast.forecastday[0].fcttext_metric }}</span> -->
                 </div>
             </div>          
             <div class="icon">
@@ -23,35 +26,38 @@ import variables from '../variables'
 
 export default {
    name: 'weather',
+   props: 'currentweather',
    data() {
         return {
-            currentweather: {},
-            currentweatherIcon: null,
-            forecast: [],
-            location: [],
+            loading: false,
         }
     },
-    mounted() {
-        this.getWeatherData();
+    created() {
+        // axios.all([this.getCurrentUser(), this.getPeople()])
+        // .then(axios.spread((currentUser) => {
+        //     this.$store.dispatch('addPeople', {
+        //         currentUser: currentUser.data,
+        //     })
+        // }))
+        // this.getWeatherData();
+    },
+    computed: {
+        currentweather() {
+            return this.$store.getters.getWeatherData
+        }
     },
     methods: {
         getWeatherData() {
+            this.loading = true
             axios.get('http://api.wunderground.com/api/ee1f1a8cb9899e1b/conditions/geolookup/alerts/forecast/lang:NL/q/zmw:00000.1.06270.json')
             .then(response => {
-                this.currentweather = response.data.current_observation
-                this.currentweatherIcon = response.data.current_observation.icon
-                this.forecast = response.data.forecast
-                this.location = response.data.location
-                setTimeout(this.getWeatherData, 60000);
-                console.log("Updated weather");
-                return this.$store.getters.getWeatherData
-            })
-            .catch(error => {
-                setTimeout(this.getNewsData, 30000);
-                console.log("Error: Updating weather failed, trying again in 30sec.");
+                this.loading = false 
+                console.log(response.data)
+                return this.$store.state.currentweather
             })
         }
-    }
+    },
+    
 }
 </script>
 
@@ -68,7 +74,7 @@ export default {
         }
         .weather-text {
             font-size: 1.5em;
-            margin-top: 15px;
+            margin-top: 20px;
         }
     }
     .icon {

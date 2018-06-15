@@ -1,7 +1,7 @@
 <template>
     <div class="grid-item">
         <div class="news">
-            <div class="item" :articles="articles" v-for="item in articles.slice(0, 4)" :key="item.id">
+            <div class="item" :articles="articles" v-for="item in articles.slice(0, 5)" :key="item.id">
                 <div class="icon">
                     <img :src="require('../assets/icons/news.png')" alt="">
                 </div>
@@ -30,20 +30,15 @@ export default {
         getNewsData() {
             axios.get('https://newsapi.org/v2/top-headlines?sources=rtl-nieuws&apiKey=d7a62fd8b2d444f78e5b7e56a7ac0665')
             .then(response => {
-                console.log(response.data)
                 this.articles = response.data.articles
-                // return this.$store.getters.getNewsData
+                setTimeout(this.getNewsData, 30000);
+                console.log("Updated news");
             })
-            .catch(function (error) {
-                console.log(error)
+            .catch(error => {
+                setTimeout(this.getNewsData, 30000);
+                console.log("Error: Updating news failed, trying again in 30sec.");            
             })
         }
-    },
-    ready: function () {
-        this.getNewsData();
-        setInterval(function () {
-        this.getNewsData();
-        }.bind(this), 60000); 
     }
 }
 </script>

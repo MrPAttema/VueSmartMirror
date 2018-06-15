@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import Home from './Home.vue'
 import store from './store'
 

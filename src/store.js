@@ -1,22 +1,19 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        token: '',
-        weather: {},
-        usersPeople: {},
-        presencePusher: null,
-        privatePusher: null,
-        allUsersChannel: null,
-        privateChannel: null,
-        onlineMembers: []
+        currentweather: '',
+        weatherWarnings: '',
     },
     getters: {
-        getWeatherData() {
-            return state.weather
+        getWeatherData: state => {
+            return state.currentweather
+        },
+        getWeatherWarnings: state => {
+            return state.weatherWarnings
         }
     },
     mutations: {

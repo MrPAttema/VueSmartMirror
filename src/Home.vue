@@ -1,18 +1,8 @@
 <template>
     <div id="home">
-        <div class="notify-container">
-            <div class="special-messages">
-                <div class="notify-icon">
-                    <img :src="require('./assets/icons/info.png')" alt="">
-                </div>
-                <div class="notify-message">
-                    <span class="message">Waarchuwing voor onweer</span>
-                </div>
-            </div>
-        </div>
         <div class="grid-container">
             <Weather/>
-            <div class="grid-item"></div>
+            <Clock/>
             <!-- <div class="grid-item"></div> -->
             <News/>
         </div>
@@ -28,22 +18,17 @@ import News from './Components/News.vue';
 import Clock from './Components/Clock.vue';
 
 export default {
-  name: 'home',
+    name: 'home',
     components: {
         Weather,
         News,
         Clock
-    },
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js home'
     }
-  }
 }
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700|Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700|Roboto:100,300,400,500,700');
 @import './assets/styles/all';
 
 body, html {
