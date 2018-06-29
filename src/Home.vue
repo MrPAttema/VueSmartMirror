@@ -1,10 +1,20 @@
 <template>
     <div id="home">
-        <div class="grid-container">
-            <Weather/>
-            <Clock/>
-            <!-- <div class="grid-item"></div> -->
-            <News/>
+        <div class="region fullscreen below"><div class="container"></div></div>
+        <div class="region top bar">
+            <div class="container"></div>
+            <div class="region top left"><div class="container"><Weather/></div></div>
+            <div class="region top center"><div class="container"></div></div>
+            <div class="region top right"><div class="container"><Clock/></div></div>
+        </div>
+        <div class="region upper third"><div class="container"></div></div>
+        <div class="region middle center"><div class="container"></div></div>
+        <div class="region lower third"><div class="container"><br/></div></div>
+        <div class="region bottom bar">
+            <div class="container"></div>
+            <div class="region bottom left"><div class="container"></div></div>
+            <div class="region bottom center"><div class="container"><News/></div></div>
+            <div class="region bottom right"><div class="container"></div></div>
         </div>
     </div>
 </template>
@@ -28,15 +38,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700|Roboto:100,300,400,500,700');
 @import './assets/styles/all';
 
-body, html {
-    margin: 0;
-    padding: 0;
-    background-color: black;
-    font-family: 'Open Sans', sans-serif;
-}
 .notify-container {
     width: 90%;
     margin: 0 auto;
