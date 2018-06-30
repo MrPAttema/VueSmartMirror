@@ -56,7 +56,7 @@ export default {
             const url  = 'http://api.wunderground.com/api/'+ variables.weatherUndergroundApiKey +'/conditions/geolookup/alerts/forecast/lang:NL/q/zmw:00000.1.06270.json';
             axios.get(url)
             .then(response => {
-                this.unit = variables.scale;
+                this.unit = variables.unitScale;
                 this.currentweather = response.data.current_observation;
                 this.currentweatherIcon = response.data.current_observation.icon;
                 this.forecast = response.data.forecast;

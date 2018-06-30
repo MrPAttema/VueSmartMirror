@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         getNewsData() {
-            const url = 'https://newsapi.org/v2/top-headlines?sources=rtl-nieuws&apiKey='+ variables.newsApiKey;
+            const url = 'https://newsapi.org/v2/top-headlines?sources='+ variables.newsApiSource +'&apiKey='+ variables.newsApiKey;
             axios.get(url)
             .then(response => {
                 this.articles = response.data.articles
