@@ -12,8 +12,8 @@
         <div class="region lower third"><div class="container"><br/></div></div>
         <div class="region bottom bar">
             <div class="container"></div>
-            <div class="region bottom left"><div class="container"></div></div>
-            <div class="region bottom center"><div class="container"><News/></div></div>
+            <div class="region bottom left"><div class="container"><News/></div></div>
+            <div class="region bottom center"><div class="container"></div></div>
             <div class="region bottom right"><div class="container"></div></div>
         </div>
     </div>

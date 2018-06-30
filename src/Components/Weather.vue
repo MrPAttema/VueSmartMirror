@@ -10,10 +10,15 @@
                     <span>{{ forecast.txt_forecast.forecastday[0].title | capitalize }}: {{ forecast.txt_forecast.forecastday[0].fcttext_metric }}</span>
                 </div>
                 <div class="forecast">
+                    <span>Voorspelingen:</span>
+                    <hr>
                     <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast" :key="item.id">
                         <span class="weekname">{{ item.date.weekday | capitalize }}</span>
                         <img class="forecast-icon" :src="require('../assets/icons/day/'+  item.icon +'.png')" alt="">
-                        {{ item.high.celsius }}<span v-html="degreeLabel"></span> - {{ item.low.celsius }}<span v-html="degreeLabel"></span>
+                        <div class="weekname">
+                            {{ item.high.celsius }}<span v-html="degreeLabel"></span> - {{ item.low.celsius }}<span v-html="degreeLabel"></span>
+                        </div>
+                        <hr class="hr-light">
                     </div>
                 </div>
             </div>          
@@ -89,36 +94,46 @@ export default {
     .data {
         height: 100%;
             .temprature {
-            font-size: 7em;
+            font-size: 6em;
             font-weight: 300;
             letter-spacing: -0.1em;
             margin: auto 0;
         }
         .weather-text {
-            font-size: 1.5em;
-            margin-top: 15px;
+            font-size: 1.25em;
         }
     }
     .icon {
-        height: 100%;
-        width: 40%;
         position: absolute;
         transform: translateY(-50%);
-        top: 50%;
-        left: 350px;
+        top: 80px;
+        left: 280px;
         img {
-            max-width: 210px;
+            max-width: 180px;
             margin: auto 0;
             image-rendering: -webkit-optimize-contrast;
             position: relative;
         }
     }
 }
+.forecast {
+    margin-top: 15px;
+}
 img.forecast-icon {
     max-height: 50px;
 }
 span.weekname {
     top: -20px;
+    width: 150px;
     position: relative;
+}
+.weekname {
+    display: inline;
+    top: -20px;
+    position: relative;
+}
+.hr-light {
+    border-color: #666;
+    margin-top: 0;
 }
 </style>
