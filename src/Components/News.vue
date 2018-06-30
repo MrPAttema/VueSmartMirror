@@ -1,6 +1,8 @@
 <template>
     <div class="grid-item">
         <div class="news">
+            <span>RTL Nieuws:</span>
+            <hr>
             <div class="item" :articles="articles" v-for="item in articles.slice(0, 6)" :key="item.id">
                 <div class="icon">
                     <img :src="require('../assets/icons/news.png')" alt="">
@@ -62,7 +64,8 @@ export default {
 
 <style lang="scss" scoped>
 .news {
-    font-size: 1.2em;
+    // font-size: 1.2em;
+    font-weight: 300;
     .item {
         margin-bottom: 15px;
     }

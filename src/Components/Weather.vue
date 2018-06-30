@@ -13,7 +13,7 @@
                     <span>Voorspelingen:</span>
                     <hr>
                     <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast" :key="item.id">
-                        <span class="weekname">{{ item.date.weekday | capitalize }}</span>
+                        <span class="weekname">{{ item.date.weekday | capitalize }}:</span>
                         <img class="forecast-icon" :src="require('../assets/icons/day/'+  item.icon +'.png')" alt="">
                         <div class="weekname">
                             {{ item.high.celsius }}<span v-html="degreeLabel"></span> - {{ item.low.celsius }}<span v-html="degreeLabel"></span>
