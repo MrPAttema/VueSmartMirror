@@ -1,7 +1,7 @@
 <template>
     <div class="grid-item">
         <div class="news">
-            <div class="item" :articles="articles" v-for="item in articles.slice(0, 5)" :key="item.id">
+            <div class="item" :articles="articles" v-for="item in articles.slice(0, 6)" :key="item.id">
                 <div class="icon">
                     <img :src="require('../assets/icons/news.png')" alt="">
                 </div>
@@ -21,6 +21,8 @@ export default {
    data() {
         return {
             articles: [],
+            fade: true,
+            fadePoint: 0.25, // Start on 1/4th of the list.
         }
     },
     mounted() {
@@ -28,14 +30,29 @@ export default {
     },
     methods: {
         getNewsData() {
-            axios.get('https://newsapi.org/v2/top-headlines?sources=rtl-nieuws&apiKey=d7a62fd8b2d444f78e5b7e56a7ac0665')
+            const url = 'https://newsapi.org/v2/top-headlines?sources=rtl-nieuws&apiKey='+ variables.newsApiKey;
+            axios.get(url)
             .then(response => {
                 this.articles = response.data.articles
+                // for (var item in this.articles) {
+                //     if (this.fade && this.fadePoint < 1) {
+                //         if (this.fadePoint < 0) {
+                //             this.fadePoint = 0;
+                //         }
+                //         var startingPoint = this.articles.length * this.fadePoint;
+                //         var steps = this.articles.length - startingPoint;
+                //         if (item >= startingPoint) {
+                //             var currentStep = item - startingPoint;
+                //             item.style.opacity = 1 - (1 / steps * currentStep);
+                //         }
+                //     }
+                // }
                 setTimeout(this.getNewsData, 30000);
                 console.log("Updated news");
             })
             .catch(error => {
                 setTimeout(this.getNewsData, 30000);
+                console.log(error)
                 console.log("Error: Updating news failed, trying again in 30sec.");            
             })
         }

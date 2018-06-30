@@ -3,10 +3,18 @@
         <div class="weather">
             <div class="data">
                 <div class="temprature">
-                    {{ currentweather.temp_c }} &deg;C
+                    {{ currentweather.temp_c }}
+                    <span v-html="degreeLabel"></span>
                 </div>
                 <div class="weather-text">
                     <span>{{ forecast.txt_forecast.forecastday[0].title | capitalize }}: {{ forecast.txt_forecast.forecastday[0].fcttext_metric }}</span>
+                </div>
+                <div class="forecast">
+                    <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast" :key="item.id">
+                        <span class="weekname">{{ item.date.weekday | capitalize }}</span>
+                        <img class="forecast-icon" :src="require('../assets/icons/day/'+  item.icon +'.png')" alt="">
+                        {{ item.high.celsius }}<span v-html="degreeLabel"></span> - {{ item.low.celsius }}<span v-html="degreeLabel"></span>
+                    </div>
                 </div>
             </div>          
             <div class="icon">
@@ -28,7 +36,11 @@ export default {
             currentweather: {},
             currentweatherIcon: null,
             forecast: [],
+            longtermForecast: [],
             location: [],
+            degreeLabel: '',
+            units: '',
+            maxNumberOfDays: 7,
         }
     },
     mounted() {
@@ -36,12 +48,28 @@ export default {
     },
     methods: {
         getWeatherData() {
-            axios.get('http://api.wunderground.com/api/ee1f1a8cb9899e1b/conditions/geolookup/alerts/forecast/lang:NL/q/zmw:00000.1.06270.json')
+            const url  = 'http://api.wunderground.com/api/'+ variables.weatherUndergroundApiKey +'/conditions/geolookup/alerts/forecast/lang:NL/q/zmw:00000.1.06270.json';
+            axios.get(url)
             .then(response => {
-                this.currentweather = response.data.current_observation
-                this.currentweatherIcon = response.data.current_observation.icon
-                this.forecast = response.data.forecast
-                this.location = response.data.location
+                this.unit = variables.scale;
+                this.currentweather = response.data.current_observation;
+                this.currentweatherIcon = response.data.current_observation.icon;
+                this.forecast = response.data.forecast;
+                this.longtermForecast = response.data.forecast.simpleforecast.forecastday;
+                this.location = response.data.location;
+                switch(this.unit) {
+                case 'metric':
+                    this.degreeLabel = '&deg;C';
+                    this.units = 'celcius';
+                    break;
+                case 'imperial':
+                    this.degreeLabel = '&deg;F';
+                    this.units = 'fahrenheit';
+                    break;
+                case 'default':
+                    this.degreeLabel = 'K';
+                    break;
+                }
                 setTimeout(this.getWeatherData, 60000);
                 console.log("Updated weather");
                 return this.$store.getters.getWeatherData
@@ -85,5 +113,12 @@ export default {
             position: relative;
         }
     }
+}
+img.forecast-icon {
+    max-height: 50px;
+}
+span.weekname {
+    top: -20px;
+    position: relative;
 }
 </style>

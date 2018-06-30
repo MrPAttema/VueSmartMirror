@@ -3,8 +3,7 @@
         <div class="currentTime clock">
             {{ currentTime }}
             <div class="currentDate">
-                <span>{{ currentDay | capitalize }}</span>
-                <span>{{ currentDate }}</span>
+                <span>{{ currentDay | capitalize }}, {{ currentDate }}</span>
             </div>
         </div>
     </div>

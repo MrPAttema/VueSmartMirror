@@ -38,8 +38,13 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700|Roboto:100,300,400,500,700');
 @import './assets/styles/all';
 
+body, html {
+    background-color: black;
+    font-family: 'Open Sans', sans-serif;
+}
 .notify-container {
     width: 90%;
     margin: 0 auto;

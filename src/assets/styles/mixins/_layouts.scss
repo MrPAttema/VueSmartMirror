@@ -1,9 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700|Roboto:100,300,400,500,700');
-
 html {
 //   cursor: none;
-  background-color: black;
-  font-family: 'Open Sans', sans-serif;
   overflow: hidden;
   background: #000;
 }
@@ -80,6 +76,7 @@ body {
 .region.top.left,
 .region.top.center {
   top: 100%;
+  width: 33%;
 }
 
 .region.bottom {
