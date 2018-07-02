@@ -41,6 +41,7 @@ export default {
             currentweather: {},
             currentweatherIcon: null,
             forecast: [],
+            forecastday: [], 
             longtermForecast: [],
             location: [],
             degreeLabel: '',
@@ -63,17 +64,17 @@ export default {
                 this.longtermForecast = response.data.forecast.simpleforecast.forecastday;
                 this.location = response.data.location;
                 switch(this.unit) {
-                case 'metric':
-                    this.degreeLabel = '&deg;C';
-                    this.units = 'celcius';
-                    break;
-                case 'imperial':
-                    this.degreeLabel = '&deg;F';
-                    this.units = 'fahrenheit';
-                    break;
-                case 'default':
-                    this.degreeLabel = 'K';
-                    break;
+                    case 'metric':
+                        this.degreeLabel = '&deg;C';
+                        this.units = 'celcius';
+                        break;
+                    case 'imperial':
+                        this.degreeLabel = '&deg;F';
+                        this.units = 'fahrenheit';
+                        break;
+                    case 'default':
+                        this.degreeLabel = 'K';
+                        break;
                 }
                 setTimeout(this.getWeatherData, 60000);
                 console.log("Updated weather");

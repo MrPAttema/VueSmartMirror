@@ -4,7 +4,7 @@
         <div class="region top bar">
             <div class="container"></div>
             <div class="region top left"><div class="container"><Weather/></div></div>
-            <div class="region top center"><div class="container"></div></div>
+            <div class="region top center"><div class="container"><Status/></div></div>
             <div class="region top right"><div class="container"><Clock/></div></div>
         </div>
         <div class="region upper third"><div class="container"></div></div>
@@ -26,13 +26,15 @@ import variables from './variables'
 import Weather from './Components/Weather.vue';
 import News from './Components/News.vue';
 import Clock from './Components/Clock.vue';
+import Status from './Components/Status.vue';
 
 export default {
     name: 'home',
     components: {
         Weather,
         News,
-        Clock
+        Clock,
+        Status,
     }
 }
 </script>

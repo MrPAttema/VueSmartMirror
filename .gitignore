@@ -11,3 +11,4 @@ variables.js
 *.ntvs*
 *.njsproj
 *.sln
+src/variables.js
