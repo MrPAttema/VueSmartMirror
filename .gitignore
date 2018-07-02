@@ -12,3 +12,4 @@ variables.js
 *.njsproj
 *.sln
 src/variables.js
+src/variables.js.bak
