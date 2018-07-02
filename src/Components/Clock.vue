@@ -3,7 +3,7 @@
         <div class="currentTime clock">
             {{ currentTime }}
             <div class="currentDate">
-                <span>{{ currentDay | capitalize }}, {{ currentDate }}</span>
+                <span>{{ currentDay | capitalize }}</span>
             </div>
         </div>
     </div>
@@ -25,8 +25,7 @@ export default {
     methods: {
         updateCurrentTime() {
             this.currentTime = moment().format('LTS');
-            this.currentDay = moment().format('dddd');
-            this.currentDate = moment().date() + '-' + moment().weekday() + '-' + moment().year();
+            this.currentDay = moment().format('dddd, D MMMM YYYY');
             setTimeout(this.updateCurrentTime, 1000);
         }
     },
