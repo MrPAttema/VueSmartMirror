@@ -5,7 +5,7 @@
             <hr>
             <div class="item" :articles="articles" v-for="item in articles.slice(0, 6)" :key="item.id">
                 <div class="icon">
-                    <img :src="require('../assets/icons/news.png')" alt="">
+                    <img :src="require('../assets/icons/news3.png')" alt="">
                 </div>
                 <span>{{ item.title }}</span>
             </div>

@@ -4,6 +4,12 @@ A smart mirror for a smarter you
 
 ## Installation
 
+### Automatic installation
+
+This installer will only work on Raspberri Pi devices.
+1. Login to your device via SSH.
+2. bash -c "$(curl -sL https://raw.githubusercontent.com/MrPAttema/VueSmartMirror/master/installmirror.sh)"
+
 ### Manual installation
 
 1. Download and install the latest Node.js version.

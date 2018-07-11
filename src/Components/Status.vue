@@ -1,12 +1,12 @@
 <template>
-    <offline v-on:detected-condition="detected">
+    <detect-network v-on:detected-condition="detected">
         <div slot="online">
             <img :src="require('../assets/icons/wifi-icon-green.png')" alt="">
         </div>
         <div slot="offline">
             <img :src="require('../assets/icons/wifi-icon-red.png')" alt="">
         </div>
-    </offline>
+    </detect-network>
 </template>
 
 <script>

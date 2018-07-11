@@ -94,14 +94,15 @@ export default {
     display: flex;
     .data {
         height: 100%;
-            .temprature {
+        .temprature {
             font-size: 6em;
             font-weight: 300;
             letter-spacing: -0.1em;
             margin: auto 0;
         }
         .weather-text {
-            font-size: 1.25em;
+            font-size: 1.5em;
+            font-weight: 300;
         }
     }
     .icon {
