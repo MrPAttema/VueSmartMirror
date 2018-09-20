@@ -49,7 +49,7 @@ export default {
                 //         }
                 //     }
                 // }
-                setTimeout(this.getNewsData, 30000);
+                setTimeout(this.getNewsData, 600000);
                 console.log("Updated news");
             })
             .catch(error => {
@@ -64,8 +64,8 @@ export default {
 
 <style lang="scss" scoped>
 .news {
-    // font-size: 1.2em;
-    font-weight: 300;
+    font-size: 1em;
+    font-weight: 500;
     .item {
         margin-bottom: 15px;
     }

@@ -1,8 +1,13 @@
 <template>
     <div id="home">
-        <div class="region fullscreen below"><div class="container"></div></div>
+        <div class="region fullscreen below">
+            <div class="container">
+            </div>
+        </div>
         <div class="region top bar">
-            <div class="container"></div>
+            <div class="container">
+                <NotificationCenter></NotificationCenter>
+            </div>
             <div class="region top left"><div class="container"><Weather/></div></div>
             <div class="region top center"><div class="container"><Status/></div></div>
             <div class="region top right"><div class="container"><Clock/></div></div>
@@ -23,6 +28,7 @@
 import axios from 'axios'
 import variables from './variables'
 
+import NotificationCenter from './Components/NotificationCenter.vue';
 import Weather from './Components/Weather.vue';
 import News from './Components/News.vue';
 import Clock from './Components/Clock.vue';
@@ -31,6 +37,7 @@ import Status from './Components/Status.vue';
 export default {
     name: 'home',
     components: {
+        NotificationCenter,
         Weather,
         News,
         Clock,
@@ -74,10 +81,10 @@ body, html {
             background-color: $alert-normal;
             border-bottom-left-radius: 10px;
             img {
-                height: 65%;
+                height: 70%;
                 position: relative;
                 top: 50%;
-                left: 50%;
+                left: 30%;
                 transform: translate(-50%, -50%);
             }
         }

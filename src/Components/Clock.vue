@@ -47,6 +47,7 @@ export default {
     }
     .currentDate {
         font-size: 30px;
+        font-weight: 500;
         span {
             display: block;
         }
