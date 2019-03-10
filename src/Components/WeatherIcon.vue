@@ -14,19 +14,19 @@
 </template>
 
 <script>
-  import WeatherIconClearDay from '../assets/icons/day/clear_day.png'
-  import WeatherIconClearNight from '../assets/icons/day/clear_night.png'
-  import WeatherIconCloudy from '../assets/icons/day/cloudy.png'
-  import WeatherIconPartlyCloudyDay from '../assets/icons/day/partly_cloudy_day.png'
-  import WeatherIconPartlyCloudyNight from '../assets/icons/day/partly_cloudy_night.png'
-  import WeatherIconRain from '../assets/icons/day/rain.png'
-  import WeatherIconSleet from '../assets/icons/day/sleet.png'
-  import WeatherIconSnow from '../assets/icons/day/snow.png'
-  import WeatherIconWind from '../assets/icons/day/wind.png'
-  import WeatherIconFog from '../assets/icons/day/fog.png'
+  import WeatherIconClearDay from '../assets/icons/clear-day.png'
+  import WeatherIconClearNight from '../assets/icons/clear-night.png'
+  import WeatherIconCloudy from '../assets/icons/cloudy.png'
+  import WeatherIconPartlyCloudyDay from '../assets/icons/partly-cloudy-day.png'
+  import WeatherIconPartlyCloudyNight from '../assets/icons/partly-cloudy-night.png'
+  import WeatherIconRain from '../assets/icons/rain.png'
+  import WeatherIconSleet from '../assets/icons/sleet.png'
+  import WeatherIconSnow from '../assets/icons/snow.png'
+  import WeatherIconWind from '../assets/icons/wind.png'
+  import WeatherIconFog from '../assets/icons/fog.png'
 
   export default {
-    name: 'weatherIcon',
+    name: 'WeatherIcon',
     props: ['icon'],
     components: {
       WeatherIconClearDay,

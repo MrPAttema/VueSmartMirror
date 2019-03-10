@@ -3,25 +3,34 @@
         <div class="weather">
             <div class="data">
                 <div class="temprature">
-                    {{ currentTemprature }}
-                    <span v-html="degreeLabel"></span>
+                    {{ Math.round(currentweather.currently.temperature * 10 ) / 10 }}
+                    <span>&deg;C</span>
                 </div>
                 <div class="weather-text">
-                    <span>{{ currentweather.summary }}</span>
+                    <span>{{ currentweather.currently.summary }}</span>
                     <br>
-                    <span class="under">Wind: {{ Math.round(currentweather.windSpeed) }} km/h | Windstoten: {{ Math.round(currentweather.windGust) }}  km/h</span>
+                    <span class="under">Gevoelstemperatuur: {{ Math.round(currentweather.currently.apparentTemperature *10 ) / 10 }}&deg;C</span>
                     <br>
-                    <span>{{ updateTime }}</span>
+                    <span class="under">Wind: {{ Math.round(currentweather.currently.windSpeed) }} km/h | Windstoten: {{ Math.round(currentweather.currently.windGust) }}  km/h</span>
+                    <br>
+                    <!-- <span>Last updated: {{ timestamp(store.weather.currently.time * 1000, store.weather.timezone)}}</span>                 -->
                 </div>
                 <div class="forecast">
                     <span>Voorspelingen:</span>
                     <hr>
-
+                    <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
+                      <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span>
+                      <img class="forecast-icon" :src="require('../assets/icons/'+  item.icon +'.png')" alt="">
+                      <div class="weekname">
+                          {{ Math.round(item.temperatureHigh * 10 ) / 10 }}<span>&deg;C</span> |  {{ Math.round(item.temperatureLow * 10 ) / 10 }}<span>&deg;C</span>
+                      </div>
+                      <hr class="hr-light">
+                    </div>
+                    <!-- <WeatherForecast class="fadeIn"></WeatherForecast> -->
                 </div>
             </div>          
             <div class="icon">
-                <WeatherIcon :icon="currentweather.icon"></WeatherIcon>
-                <!-- <img :src="require('../assets/icons/day/'+ currentweatherIcon +'.png')" alt=""> -->
+                <img :src="require('../assets/icons/'+ currentweatherIcon +'.png')" alt="">
             </div>
         </div>      
     </div>
@@ -31,19 +40,21 @@
 
 import moment from 'moment'
 import axios from 'axios'
-import store from '../store'
 import variables from '../variables'
-import WeatherIcon from './WeatherIcon'
+import store from "../store";
+// import WeatherIcon from './WeatherIcon'
+import WeatherForecast from './WeatherForecast'
+
 
 export default {
-   name: 'weather',
-   components: {
-      WeatherIcon
+    name: 'weather',
+    components: {
+      WeatherForecast,
     },
-   data() {
+    data() {
         return {
             currentweather: {},
-            currentweatherIcon: null,
+            currentweatherIcon: '',
             currentTemprature: '',
             forecast: [],
             forecastday: [], 
@@ -51,48 +62,8 @@ export default {
             location: [],
             degreeLabel: '',
             units: '',
+            daytime: '',
             maxNumberOfDays: 7,
-        }
-    },
-    mounted() {
-        this.getWeatherData();
-    },
-    methods: {
-        getWeatherData() {
-
-            var proxy = 'https://cors-anywhere.herokuapp.com/';
-            var url  = 'https://api.darksky.net/forecast/'+ variables.darkSkyApiKey +'/'+ variables.latitude +','+ variables.longitude +'/?units='+ variables.units +'&lang='+ variables.lang;
-
-            axios.get(proxy + url)
-            .then(response => {
-                console.log(response.data)
-                this.unit = variables.units;
-                this.currentweather = response.data.currently;
-                this.currentTemprature = parseFloat(response.data.currently.temperature).toFixed(1);
-                this.currentweatherIcon = response.data.currently.icon;
-                this.forecast = response.data.daily.data;
-                this.updateTime = moment(response.data.currently.time).format('dddd, D MMMM YYYY');
-                switch(this.unit) {
-                    case 'ca':
-                        this.degreeLabel = '&deg;C';
-                        this.units = 'celcius';
-                        break;
-                    case 'imperial':
-                        this.degreeLabel = '&deg;F';
-                        this.units = 'fahrenheit';
-                        break;
-                    case 'default':
-                        this.degreeLabel = 'K';
-                        break;
-                }
-                setTimeout(this.getWeatherData, 600000);
-                console.log("Updated weather");
-                return this.$store.getters.getWeatherData
-            })
-            .catch(error => {
-                setTimeout(this.getNewsData, 30000);
-                console.log("Error: Updating weather failed, trying again in 30sec.");
-            })
         }
     }
 }
@@ -130,6 +101,35 @@ export default {
             position: relative;
         }
     }
+}
+.weather {
+  flex: 1;
+  margin-top: 16px;
+  padding-bottom: 16px;
+  position: relative;
+
+  @media(max-width: 850px) {
+    padding-bottom: 48px;
+  }
+
+  .current,
+  .forecast {
+    flex: 1;
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 .forecast {
     margin-top: 15px;

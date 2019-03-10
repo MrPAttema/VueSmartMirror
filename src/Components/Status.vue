@@ -26,7 +26,7 @@ export default {
     methods: {
         detected(e) {
             this.state = e;
-            console.log(e)
+            // console.log(e);
         }
     }
 }

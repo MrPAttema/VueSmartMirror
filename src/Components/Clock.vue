@@ -1,4 +1,5 @@
 <template>
+  <transition appear>
     <div class="grid-item right">
         <div class="currentTime clock">
             {{ currentTime }}
@@ -7,6 +8,7 @@
             </div>
         </div>
     </div>
+  </transition>
 </template>
 
 <script>
@@ -37,20 +39,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .right {
-        float: right;
-        text-align: right;
-    }
-    .clock {
-        font-size: 6em;
-        font-weight: 300;
-    }
-    .currentDate {
-        font-size: 30px;
-        font-weight: 500;
-        span {
-            display: block;
-        }
-    }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.1s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  .right {
+      float: right;
+      text-align: right;
+  }
+  .clock {
+      font-size: 6em;
+      font-weight: 300;
+  }
+  .currentDate {
+      font-size: 30px;
+      font-weight: 500;
+      span {
+          display: block;
+      }
+  }
 </style>
 

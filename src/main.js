@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Home from './Home.vue'
+import Home from './Home'
 import store from './store'
 
 Vue.filter('capitalize', function (value) {

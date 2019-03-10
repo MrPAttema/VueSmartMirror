@@ -8,7 +8,11 @@
             <div class="container">
                 <NotificationCenter></NotificationCenter>
             </div>
-            <div class="region top left"><div class="container"><Weather/></div></div>
+            <div class="region top left">
+              <div class="container">
+                <Weather></Weather>
+              </div>
+            </div>
             <div class="region top center"><div class="container"><Status/></div></div>
             <div class="region top right"><div class="container"><Clock/></div></div>
         </div>
@@ -17,9 +21,20 @@
         <div class="region lower third"><div class="container"><br/></div></div>
         <div class="region bottom bar">
             <div class="container"></div>
-            <div class="region bottom left"><div class="container"><News/></div></div>
-            <div class="region bottom center"><div class="container"></div></div>
-            <div class="region bottom right"><div class="container"></div></div>
+            <div class="region bottom left">
+              <div class="container">
+                <News></News>
+                </div>
+                </div>
+            <div class="region bottom center">
+              <div class="container">
+              </div>
+            </div>
+            <div class="region bottom right">
+              <div class="container">
+                
+              </div>
+          </div>
         </div>
     </div>
 </template>
@@ -35,14 +50,33 @@ import Clock from './Components/Clock.vue';
 import Status from './Components/Status.vue';
 
 export default {
-    name: 'home',
-    components: {
-        NotificationCenter,
-        Weather,
-        News,
-        Clock,
-        Status,
+  name: 'home',
+  components: {
+    NotificationCenter,
+    Weather,
+    News,
+    Clock,
+    Status,
+  },
+  computed: {
+    store () {
+      return this.$store.state
     }
+  },
+  mounted() {
+    this.fetchWeather();
+  },
+  methods: {
+    fetchWeather () {
+      this.$store.dispatch('appStatus', {state: 'loading'})
+      this.$store.dispatch('weather').then(() => {
+        this.$store.dispatch('appStatus', {state: 'loaded'})
+      })
+      this.$store.dispatch('getNotificationData').then(() => {
+        this.$store.dispatch('appStatus', {state: 'loaded'})
+      })
+    },
+  },
 }
 </script>
 
@@ -95,6 +129,9 @@ body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: white;
+}
+.sys-info {
+  color: rgb(85, 85, 85);
 }
 
 .grid-container {
