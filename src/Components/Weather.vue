@@ -65,6 +65,28 @@ export default {
             daytime: '',
             maxNumberOfDays: 7,
         }
+    },
+    mounted(){
+        this.getData();
+    },
+    methods: {
+        getData() {
+            var proxy = 'https://cors-anywhere.herokuapp.com/';
+            var url = 'https://api.darksky.net/forecast/' + variables.darkSkyApiKey + '/' + variables.latitude + ',' + variables.longitude + '/?units=' + variables.units + '&lang=' + variables.lang;
+            axios.get(proxy + url)
+            .then(response => {
+                console.log(response.data);
+                commit('setGoogleMapsLoaded', response.data)
+                this.currentweather = response.data;
+                this.currentweatherIcon = response.data.currently.icon;
+                this.longtermForecast = response.data.daily.data;
+                setTimeout(this.getData(), 600000);
+            })
+            .catch(error => {
+                setTimeout(this.getData(), 30000);
+                console.log("Fout bij weer update, volgende poging in 30 seconden.");
+            });
+        }
     }
 }
 </script>

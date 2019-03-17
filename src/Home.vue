@@ -24,8 +24,8 @@
             <div class="region bottom left">
               <div class="container">
                 <News></News>
-                </div>
-                </div>
+              </div>
+            </div>
             <div class="region bottom center">
               <div class="container">
               </div>
@@ -64,15 +64,12 @@ export default {
     }
   },
   mounted() {
-    this.fetchWeather();
+    // this.fetchData();
   },
   methods: {
-    fetchWeather () {
+    fetchData () {
       this.$store.dispatch('appStatus', {state: 'loading'})
       this.$store.dispatch('weather').then(() => {
-        this.$store.dispatch('appStatus', {state: 'loaded'})
-      })
-      this.$store.dispatch('getNotificationData').then(() => {
         this.$store.dispatch('appStatus', {state: 'loaded'})
       })
     },
