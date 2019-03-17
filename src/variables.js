@@ -18,8 +18,8 @@ const variables = {
         All details can be found at https://www.wunderground.com/weather/api/d/docs.
     */
     darkSkyApiKey: '6d208dda570ac5a4e3023b3c32166779',
-    latitude: '53.1869101',
-    longitude: '5.4483306',
+    latitude: '53.1832967',
+    longitude: '5.4474851',
     lang: 'nl',
     units: 'ca',
     

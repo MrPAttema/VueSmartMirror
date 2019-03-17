@@ -17,13 +17,19 @@
             <div class="region top right"><div class="container"><Clock/></div></div>
         </div>
         <div class="region upper third"><div class="container"></div></div>
-        <div class="region middle center"><div class="container"></div></div>
+        <div class="region middle center">
+          <div class="container">
+          </div>
+        </div>
         <div class="region lower third"><div class="container"><br/></div></div>
         <div class="region bottom bar">
             <div class="container"></div>
             <div class="region bottom left">
               <div class="container">
                 <News></News>
+                <div class="sys-info">
+                  v{{ this.$store.state.versionNumber }} ({{ this.$store.state.versionNumberAdd }})
+                </div>
               </div>
             </div>
             <div class="region bottom center">
@@ -64,12 +70,15 @@ export default {
     }
   },
   mounted() {
-    // this.fetchData();
+    this.fetchData();
   },
   methods: {
     fetchData () {
       this.$store.dispatch('appStatus', {state: 'loading'})
-      this.$store.dispatch('weather').then(() => {
+      // this.$store.dispatch('weather').then(() => {
+      //   this.$store.dispatch('appStatus', {state: 'loaded'})
+      // })
+      this.$store.dispatch('getNotificationData').then(() => {
         this.$store.dispatch('appStatus', {state: 'loaded'})
       })
     },
@@ -84,42 +93,6 @@ export default {
 body, html {
     background-color: black;
     font-family: 'Open Sans', sans-serif;
-}
-.notify-container {
-    width: 90%;
-    margin: 0 auto;
-    .special-messages {
-        height: 50px;
-        padding: 0px 10px;      
-        color: white;
-        margin: 0 auto;
-        overflow: hidden;
-        .notify-message {
-            overflow: hidden;
-            background: $alert-yellow;
-            border-bottom-right-radius: 10px;
-            padding-left: 10px;
-            .message {
-                line-height: 50px;
-                font-size: 17px;
-                font-weight: 600;       
-            }
-        }
-        .notify-icon {
-            height: 50px;
-            width: 60px;
-            float: left;
-            background-color: $alert-normal;
-            border-bottom-left-radius: 10px;
-            img {
-                height: 70%;
-                position: relative;
-                top: 50%;
-                left: 30%;
-                transform: translate(-50%, -50%);
-            }
-        }
-    }
 }
 
 #home {

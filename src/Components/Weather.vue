@@ -19,10 +19,10 @@
                     <span>Voorspelingen:</span>
                     <hr>
                     <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
-                      <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span>
+                      <!-- <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span> -->
                       <img class="forecast-icon" :src="require('../assets/icons/'+  item.icon +'.png')" alt="">
                       <div class="weekname">
-                          {{ Math.round(item.temperatureHigh * 10 ) / 10 }}<span>&deg;C</span> |  {{ Math.round(item.temperatureLow * 10 ) / 10 }}<span>&deg;C</span>
+                           Min: {{ Math.round(item.temperatureLow * 10 ) / 10 }}<span>&deg;C</span> |Max: {{ Math.round(item.temperatureHigh * 10 ) / 10 }}<span>&deg;C</span>
                       </div>
                       <hr class="hr-light">
                     </div>
@@ -71,19 +71,18 @@ export default {
     },
     methods: {
         getData() {
-            var proxy = 'https://cors-anywhere.herokuapp.com/';
+            var proxy = 'https://quiet-fjord-46740.herokuapp.com/';
             var url = 'https://api.darksky.net/forecast/' + variables.darkSkyApiKey + '/' + variables.latitude + ',' + variables.longitude + '/?units=' + variables.units + '&lang=' + variables.lang;
             axios.get(proxy + url)
             .then(response => {
                 console.log(response.data);
-                commit('setGoogleMapsLoaded', response.data)
                 this.currentweather = response.data;
                 this.currentweatherIcon = response.data.currently.icon;
                 this.longtermForecast = response.data.daily.data;
-                setTimeout(this.getData(), 600000);
+                setTimeout(this.getData, 600000);
             })
             .catch(error => {
-                setTimeout(this.getData(), 30000);
+                setTimeout(this.getData, 30000);
                 console.log("Fout bij weer update, volgende poging in 30 seconden.");
             });
         }
