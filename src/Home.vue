@@ -1,20 +1,50 @@
 <template>
     <div id="home">
-        <div class="region fullscreen below"><div class="container"></div></div>
+        <div class="region fullscreen below">
+            <div class="container">
+            </div>
+        </div>
         <div class="region top bar">
-            <div class="container"></div>
-            <div class="region top left"><div class="container"><Weather/></div></div>
-            <div class="region top center"><div class="container"></div></div>
+            <div class="container">
+                <NotificationCenter></NotificationCenter>
+            </div>
+            <div class="region top left">
+              <div class="container">
+                <Weather></Weather>
+              </div>
+            </div>
+            <div class="region top center"><div class="container"><Status/></div></div>
             <div class="region top right"><div class="container"><Clock/></div></div>
         </div>
         <div class="region upper third"><div class="container"></div></div>
-        <div class="region middle center"><div class="container"></div></div>
+        <div class="region middle center">
+          <div class="container">
+          </div>
+        </div>
         <div class="region lower third"><div class="container"><br/></div></div>
         <div class="region bottom bar">
             <div class="container"></div>
-            <div class="region bottom left"><div class="container"><News/></div></div>
-            <div class="region bottom center"><div class="container"></div></div>
-            <div class="region bottom right"><div class="container"></div></div>
+            <div class="region bottom left">
+              <div class="container">
+                <News></News>
+                <div class="sys-info">
+                  v{{ this.$store.state.versionNumber }} ({{ this.$store.state.versionNumberAdd }})
+                  <div v-if="this.$store.state.updating" class="updater">
+                    -- <div class="loader"></div> 
+                    Zoeken naar updates
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="region bottom center">
+              <div class="container">
+              </div>
+            </div>
+            <div class="region bottom right">
+              <div class="container">
+                
+              </div>
+          </div>
         </div>
     </div>
 </template>
@@ -23,17 +53,40 @@
 import axios from 'axios'
 import variables from './variables'
 
+import NotificationCenter from './Components/NotificationCenter.vue';
 import Weather from './Components/Weather.vue';
 import News from './Components/News.vue';
 import Clock from './Components/Clock.vue';
+import Status from './Components/Status.vue';
 
 export default {
-    name: 'home',
-    components: {
-        Weather,
-        News,
-        Clock
+  name: 'home',
+  components: {
+    NotificationCenter,
+    Weather,
+    News,
+    Clock,
+    Status,
+  },
+  computed: {
+    store () {
+      return this.$store.state
     }
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData () {
+      this.$store.dispatch('appStatus', {state: 'loading'})
+      // this.$store.dispatch('weather').then(() => {
+      //   this.$store.dispatch('appStatus', {state: 'loaded'})
+      // })
+      this.$store.dispatch('getNotificationData').then(() => {
+        this.$store.dispatch('appStatus', {state: 'loaded'})
+      })
+    },
+  },
 }
 </script>
 
@@ -45,47 +98,37 @@ body, html {
     background-color: black;
     font-family: 'Open Sans', sans-serif;
 }
-.notify-container {
-    width: 90%;
-    margin: 0 auto;
-    .special-messages {
-        height: 50px;
-        padding: 0px 10px;      
-        color: white;
-        margin: 0 auto;
-        overflow: hidden;
-        .notify-message {
-            overflow: hidden;
-            background: $alert-yellow;
-            border-bottom-right-radius: 10px;
-            padding-left: 10px;
-            .message {
-                line-height: 50px;
-                font-size: 17px;
-                font-weight: 600;       
-            }
-        }
-        .notify-icon {
-            height: 50px;
-            width: 60px;
-            float: left;
-            background-color: $alert-normal;
-            border-bottom-left-radius: 10px;
-            img {
-                height: 65%;
-                position: relative;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-        }
-    }
+
+.updater {
+  display: inline-block;
+  display: -webkit-inline-box;
+  color: rgb(85, 85, 85);
+}
+
+.loader {
+  margin-top: 3px;
+  border: 4px solid #707070; 
+  border-top: 4px solid #929292; 
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 #home {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: white;
+}
+.sys-info {
+  color: rgb(85, 85, 85);
 }
 
 .grid-container {

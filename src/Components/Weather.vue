@@ -1,106 +1,122 @@
 <template>
-    <div class="grid-item">
-        <div class="weather">
-            <div class="data">
-                <div class="temprature">
-                    {{ currentweather.temp_c }}
-                    <span v-html="degreeLabel"></span>
-                </div>
-                <div class="weather-text">
-                    <span>{{ forecast.txt_forecast.forecastday[0].title | capitalize }}: {{ forecast.txt_forecast.forecastday[0].fcttext_metric }}</span>
-                </div>
-                <div class="forecast">
-                    <span>Voorspelingen:</span>
-                    <hr>
-                    <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast" :key="item.id">
-                        <span class="weekname">{{ item.date.weekday | capitalize }}:</span>
-                        <img class="forecast-icon" :src="require('../assets/icons/day/'+  item.icon +'.png')" alt="">
+    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        <div class="grid-item">
+            <div class="weather">
+                <div class="data">
+                    <div class="temprature">
+                        {{ Math.round(currentweather.currently.temperature * 10 ) / 10 }}
+                        <span>&deg;C</span>
+                    </div>
+                    <div class="weather-text">
+                        <span>{{ currentweather.currently.summary }}</span>
+                        <br>
+                        <span class="under">Gevoelstemperatuur: {{ Math.round(currentweather.currently.apparentTemperature *10 ) / 10 }}&deg;C</span>
+                        <br>
+                        <span class="under">Wind: {{ Math.round(currentweather.currently.windSpeed) }} km/h | Windstoten: {{ Math.round(currentweather.currently.windGust) }}  km/h</span>
+                        <br>
+                        <!-- <span>Last updated: {{ timestamp(store.weather.currently.time * 1000, store.weather.timezone)}}</span>                 -->
+                    </div>
+                    <div class="forecast">
+                        <span>Voorspelingen:</span>
+                        <hr>
+                        <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
+                        <!-- <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span> -->
+                        <img class="forecast-icon" :src="require('../assets/icons/'+  item.icon +'.png')" alt="">
                         <div class="weekname">
-                            {{ item.high.celsius }}<span v-html="degreeLabel"></span> - {{ item.low.celsius }}<span v-html="degreeLabel"></span>
+                            Min: {{ Math.round(item.temperatureLow) }}<span>&deg;C</span> | Max: {{ Math.round(item.temperatureHigh) }}<span>&deg;C</span>
                         </div>
                         <hr class="hr-light">
+                        </div>
+                        <!-- <WeatherForecast class="fadeIn"></WeatherForecast> -->
                     </div>
+                </div>          
+                <div class="icon">
+                    <img :src="require('../assets/icons/'+ currentweatherIcon +'.png')" alt="">
                 </div>
-            </div>          
-            <div class="icon">
-                <img :src="require('../assets/icons/day/'+ currentweatherIcon +'.png')" alt="">
-            </div>
-        </div>      
-    </div>
+            </div>      
+        </div>
+    </transition>
 </template>
 
 <script>
+
+import moment from 'moment'
 import axios from 'axios'
-import store from '../store'
 import variables from '../variables'
+import store from "../store";
+// import WeatherIcon from './WeatherIcon'
+import WeatherForecast from './WeatherForecast'
+
 
 export default {
-   name: 'weather',
-   data() {
+    name: 'weather',
+    components: {
+      WeatherForecast,
+    },
+    data() {
         return {
             currentweather: {},
-            currentweatherIcon: null,
+            currentweatherIcon: '',
+            currentTemprature: '',
             forecast: [],
+            forecastday: [], 
             longtermForecast: [],
             location: [],
             degreeLabel: '',
             units: '',
+            daytime: '',
             maxNumberOfDays: 7,
         }
     },
-    mounted() {
-        this.getWeatherData();
+    mounted(){
+        this.getData();
     },
     methods: {
-        getWeatherData() {
-            const url  = 'http://api.wunderground.com/api/'+ variables.weatherUndergroundApiKey +'/conditions/geolookup/alerts/forecast/lang:NL/q/zmw:00000.1.06270.json';
-            axios.get(url)
+        getData() {
+            var proxy = 'https://quiet-fjord-46740.herokuapp.com/';
+            var url = 'https://api.darksky.net/forecast/' + variables.darkSkyApiKey + '/' + variables.latitude + ',' + variables.longitude + '/?units=' + variables.units + '&lang=' + variables.lang;
+            axios.get(proxy + url)
             .then(response => {
-                this.unit = variables.scale;
-                this.currentweather = response.data.current_observation;
-                this.currentweatherIcon = response.data.current_observation.icon;
-                this.forecast = response.data.forecast;
-                this.longtermForecast = response.data.forecast.simpleforecast.forecastday;
-                this.location = response.data.location;
-                switch(this.unit) {
-                case 'metric':
-                    this.degreeLabel = '&deg;C';
-                    this.units = 'celcius';
-                    break;
-                case 'imperial':
-                    this.degreeLabel = '&deg;F';
-                    this.units = 'fahrenheit';
-                    break;
-                case 'default':
-                    this.degreeLabel = 'K';
-                    break;
-                }
-                setTimeout(this.getWeatherData, 60000);
-                console.log("Updated weather");
-                return this.$store.getters.getWeatherData
+                // console.log(response.data);
+                this.currentweather = response.data;
+                this.currentweatherIcon = response.data.currently.icon;
+                this.longtermForecast = response.data.daily.data;
+                console.log("Updated Weather");
+                setTimeout(this.getData, 600000);
             })
             .catch(error => {
-                setTimeout(this.getNewsData, 30000);
-                console.log("Error: Updating weather failed, trying again in 30sec.");
-            })
+                setTimeout(this.getData, 30000);
+                console.log("Fout bij weer update, volgende poging in 30 seconden.");
+            });
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 .weather {
     display: flex;
     .data {
         height: 100%;
-            .temprature {
+        .temprature {
             font-size: 6em;
             font-weight: 300;
             letter-spacing: -0.1em;
             margin: auto 0;
         }
         .weather-text {
-            font-size: 1.25em;
+            font-size: 1.5em;
+            font-weight: 500;
+
+            & .under {
+                font-size: 0.8em;
+            }
         }
     }
     .icon {
@@ -116,8 +132,36 @@ export default {
         }
     }
 }
+.weather {
+  flex: 1;
+  position: relative;
+
+  @media(max-width: 850px) {
+    padding-bottom: 48px;
+  }
+
+  .current,
+  .forecast {
+    flex: 1;
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
 .forecast {
     margin-top: 15px;
+    font-weight: 500;
 }
 img.forecast-icon {
     max-height: 50px;
@@ -126,11 +170,14 @@ span.weekname {
     top: -20px;
     width: 150px;
     position: relative;
+    font-weight: 500;
 }
 .weekname {
     display: inline;
     top: -20px;
     position: relative;
+    
+    font-size: 1em;
 }
 .hr-light {
     border-color: #666;

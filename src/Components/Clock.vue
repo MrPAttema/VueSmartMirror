@@ -1,12 +1,14 @@
 <template>
+  <transition appear>
     <div class="grid-item right">
         <div class="currentTime clock">
             {{ currentTime }}
             <div class="currentDate">
-                <span>{{ currentDay | capitalize }}, {{ currentDate }}</span>
+                <span>{{ currentDay | capitalize }}</span>
             </div>
         </div>
     </div>
+  </transition>
 </template>
 
 <script>
@@ -25,8 +27,7 @@ export default {
     methods: {
         updateCurrentTime() {
             this.currentTime = moment().format('LTS');
-            this.currentDay = moment().format('dddd');
-            this.currentDate = moment().date() + '-' + moment().weekday() + '-' + moment().year();
+            this.currentDay = moment().format('dddd, D MMMM YYYY');
             setTimeout(this.updateCurrentTime, 1000);
         }
     },
@@ -38,19 +39,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .right {
-        float: right;
-        text-align: right;
-    }
-    .clock {
-        font-size: 6em;
-        font-weight: 300;
-    }
-    .currentDate {
-        font-size: 30px;
-        span {
-            display: block;
-        }
-    }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.1s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  .right {
+      float: right;
+      text-align: right;
+  }
+  .clock {
+      font-size: 6em;
+      font-weight: 300;
+  }
+  .currentDate {
+      font-size: 30px;
+      font-weight: 500;
+      span {
+          display: block;
+      }
+  }
 </style>
 
