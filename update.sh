@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
-SCRIPTNAME="$0"
+SCRIPTNAME="mirrorboot.sh"
 ARGS="$@"
 BRANCH="master"
 
@@ -12,13 +12,15 @@ self_update() {
 
     [ -n $(git diff --name-only origin/$BRANCH | grep $SCRIPTNAME) ] && {
         echo "Found a new version of me, updating myself..."
+        service caddy stop 
+
         git pull --force
         git checkout $BRANCH
         git pull --force
         echo "Running the new version..."
         exec "$SCRIPTNAME" "$@"
 
-        service caddy reboot
+        service caddy start
 
         mirrorboot.sh
 
