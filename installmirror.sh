@@ -29,7 +29,7 @@ fi
 
 # Define helper methods.
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
-function command_exists () { type "$1" &> /dev/null ;}
+function command_exists() { type "$1" &> /dev/null ;}
 
 # Update before first apt-get
 echo -e "\e[96mUpdating packages ...\e[90m"
@@ -39,9 +39,9 @@ sudo apt-get update || echo -e "\e[91mUpdate failed, carrying on installation ..
 echo -e "\e[96mInstalling helper tools ...\e[90m"
 sudo apt-get --assume-yes install curl wget git build-essential unzip || exit
 
-# Installing helper tools
-echo -e "\e[96mInstalling Apache2 ...\e[90m"
-sudo apt-get --assume-yes install curl wget git build-essential unzip || exit
+# Installing Caddy
+echo -e "\e[96mInstalling Caddy Webserver ...\e[90m"
+curl https://getcaddy.com | bash -s personal http.cgi,http.cors,http.geoip,http.minify
 
 # Check if we need to install or upgrade Node.js.
 echo -e "\e[96mCheck current Node installation ...\e[0m"
@@ -118,34 +118,6 @@ fi
 
 # Use sample config for start VueSmartMirror
 cp config/config.js.sample config/config.js
-
-# Check if plymouth is installed (default with PIXEL desktop environment), then install custom splashscreen.
-echo -e "\e[96mCheck plymouth installation ...\e[0m"
-if command_exists plymouth; then
-	THEME_DIR="/usr/share/plymouth/themes"
-	echo -e "\e[90mSplashscreen: Checking themes directory.\e[0m"
-	if [ -d $THEME_DIR ]; then
-		echo -e "\e[90mSplashscreen: Create theme directory if not exists.\e[0m"
-		if [ ! -d $THEME_DIR/VueSmartMirror ]; then
-			sudo mkdir $THEME_DIR/VueSmartMirror
-		fi
-
-		if sudo cp ~/VueSmartMirror/splashscreen/splash.png $THEME_DIR/VueSmartMirror/splash.png && sudo cp ~/VueSmartMirror/splashscreen/VueSmartMirror.plymouth $THEME_DIR/VueSmartMirror/VueSmartMirror.plymouth && sudo cp ~/VueSmartMirror/splashscreen/VueSmartMirror.script $THEME_DIR/VueSmartMirror/VueSmartMirror.script; then
-			echo -e "\e[90mSplashscreen: Theme copied successfully.\e[0m"
-			if sudo plymouth-set-default-theme -R VueSmartMirror; then
-				echo -e "\e[92mSplashscreen: Changed theme to VueSmartMirror successfully.\e[0m"
-			else
-				echo -e "\e[91mSplashscreen: Couldn't change theme to VueSmartMirror!\e[0m"
-			fi
-		else
-			echo -e "\e[91mSplashscreen: Copying theme failed!\e[0m"
-		fi
-	else
-		echo -e "\e[91mSplashscreen: Themes folder doesn't exist!\e[0m"
-	fi
-else
-	echo -e "\e[93mplymouth is not installed.\e[0m";
-fi
 
 # Use pm2 control like a service VueSmartMirror
 read -p "Do you want use pm2 for auto starting of your VueSmartMirror (y/N)?" choice

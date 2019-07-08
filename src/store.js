@@ -27,8 +27,9 @@ export default new Vuex.Store({
     icon: '',
     inputQuery: null,
     locationIcon: 'search',
-    versionNumber: '1.2',
-    versionNumberAdd: '20190317',
+    versionNumber: '1.2.1',
+    versionNumberAdd: '20190330',
+    updating: false,
     // units: units
   },
   actions: {
@@ -83,62 +84,63 @@ export default new Vuex.Store({
       var code = null;
       var proxy = 'https://quiet-fjord-46740.herokuapp.com/';
       axios.get(proxy + 'http://projects.knmi.nl/RSSread/rss_KNMIwaarschuwingen.php')
-        .then(response => {
-          var parseString = require('xml2js').parseString;
-          var xml = response.data;
-          var self = this;
-          parseString(xml, function (err, result) {
-            message = result.rss.channel[0].item[0].title[0];
-            if (message.includes('groen')) {
-              code = 0;
-            } else if (message.includes('geel')) {
-              code = 1;
-            } else if (message.includes('oranje')) {
-              code = 2;
-            } else if (message.includes('rood')){
-              code = 3;
-            } else {
-              code = 4;
-            }
-            commit('setNotificationStatus', {
-              state: 'loaded',
-              message: message,
-              code: code,
-            })
-          });
-          setTimeout(self.getNotifications, 60000);
-          console.log("Updated KNMI");
-        })
-        .catch(error => {
-          setTimeout(this.getNotificationData, 30000);
+      .then(response => {
+        var parseString = require('xml2js').parseString;
+        var xml = response.data;
+        var self = this;
+        parseString(xml, function (err, result) {
+          message = result.rss.channel[0].item[0].title[0];
+          if (message.includes('groen')) {
+            code = 0;
+          } else if (message.includes('geel')) {
+            code = 1;
+          } else if (message.includes('oranje')) {
+            code = 2;
+          } else if (message.includes('rood')){
+            code = 3;
+          } else {
+            code = 4;
+          }
           commit('setNotificationStatus', {
             state: 'loaded',
-            message: 'Fout bij KNMI update, volgende poging in 30 seconden.',
-            code: 4,
+            message: message,
+            code: code,
           })
+        });
+        console.log("Updated KNMI");
+        setTimeout(this.getNotificationData, 60000);
+      })
+      .catch(error => {
+        setTimeout(this.getNotificationData, 30000);
+        commit('setNotificationStatus', {
+          state: 'loaded',
+          message: 'Fout bij KNMI update, volgende poging in 30 seconden.',
+          code: 4,
         })
+      })
     },
 
     weather({ commit }) {
       var proxy = 'https://quiet-fjord-46740.herokuapp.com/';
       var url = 'https://api.darksky.net/forecast/' + variables.darkSkyApiKey + '/' + variables.latitude + ',' + variables.longitude + '/?units=' + variables.units + '&lang=' + variables.lang;
       axios.get(proxy + url)
-        .then(response => {
-          console.log(response.data);
-          // this.currentweather = response.data;
-          // this.currentweatherIcon = response.data.currently.icon;
-          // this.longtermForecast = response.data.daily.data;
-          commit('setWeather', response.data);
-          commit('setWeatherForecast', response.data.daily.data);
-          setTimeout(this.weather, 600000);
+      .then(response => {
+        console.log(response.data);
+        // this.currentweather = response.data;
+        // this.currentweatherIcon = response.data.currently.icon;
+        // this.longtermForecast = response.data.daily.data;
+        commit('setWeather', response.data);
+        commit('setWeatherForecast', response.data.daily.data);
+        console.log("Updated Weather");
+        setTimeout(this.weather, 600000);
+      })
+      .catch(error => {
+        setTimeout(this.weather, 30000);
+        commit('setAppStatus', {
+          state: 'error',
+          message: 'Fout bij weer update, volgende poging in 30 seconden.'
         })
-        .catch(error => {
-          setTimeout(this.weather, 30000);
-          commit('setAppStatus', {
-            state: 'error',
-            message: 'Fout bij weer update, volgende poging in 30 seconden.'
-          })
-        })
+      })
     },
 
     notificationData({ commit }, notificationData) {

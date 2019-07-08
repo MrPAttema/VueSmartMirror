@@ -29,6 +29,10 @@
                 <News></News>
                 <div class="sys-info">
                   v{{ this.$store.state.versionNumber }} ({{ this.$store.state.versionNumberAdd }})
+                  <div v-if="this.$store.state.updating" class="updater">
+                    -- <div class="loader"></div> 
+                    Zoeken naar updates
+                  </div>
                 </div>
               </div>
             </div>
@@ -93,6 +97,29 @@ export default {
 body, html {
     background-color: black;
     font-family: 'Open Sans', sans-serif;
+}
+
+.updater {
+  display: inline-block;
+  display: -webkit-inline-box;
+  color: rgb(85, 85, 85);
+}
+
+.loader {
+  margin-top: 3px;
+  border: 4px solid #707070; 
+  border-top: 4px solid #929292; 
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 #home {

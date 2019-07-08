@@ -7,13 +7,16 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "dotenv": "^6.1.0",
+    "express": "^4.17.1",
     "fs": "0.0.1-security",
     "moment": "^2.22.2",
+    "node-cron": "^2.0.3",
     "v-offline": "^1.0.10",
     "vue": "^2.5.17",
     "vue-moment": "^4.0.0",
@@ -42,5 +45,15 @@
     "vue-template-compiler": "^2.5.17",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.11.3"
-  }
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrPAttema/VueSmartMirror.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/MrPAttema/VueSmartMirror/issues"
+  },
+  "homepage": "https://github.com/MrPAttema/VueSmartMirror#readme"
 }

@@ -1,39 +1,41 @@
 <template>
-    <div class="grid-item">
-        <div class="weather">
-            <div class="data">
-                <div class="temprature">
-                    {{ Math.round(currentweather.currently.temperature * 10 ) / 10 }}
-                    <span>&deg;C</span>
-                </div>
-                <div class="weather-text">
-                    <span>{{ currentweather.currently.summary }}</span>
-                    <br>
-                    <span class="under">Gevoelstemperatuur: {{ Math.round(currentweather.currently.apparentTemperature *10 ) / 10 }}&deg;C</span>
-                    <br>
-                    <span class="under">Wind: {{ Math.round(currentweather.currently.windSpeed) }} km/h | Windstoten: {{ Math.round(currentweather.currently.windGust) }}  km/h</span>
-                    <br>
-                    <!-- <span>Last updated: {{ timestamp(store.weather.currently.time * 1000, store.weather.timezone)}}</span>                 -->
-                </div>
-                <div class="forecast">
-                    <span>Voorspelingen:</span>
-                    <hr>
-                    <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
-                      <!-- <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span> -->
-                      <img class="forecast-icon" :src="require('../assets/icons/'+  item.icon +'.png')" alt="">
-                      <div class="weekname">
-                           Min: {{ Math.round(item.temperatureLow * 10 ) / 10 }}<span>&deg;C</span> |Max: {{ Math.round(item.temperatureHigh * 10 ) / 10 }}<span>&deg;C</span>
-                      </div>
-                      <hr class="hr-light">
+    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        <div class="grid-item">
+            <div class="weather">
+                <div class="data">
+                    <div class="temprature">
+                        {{ Math.round(currentweather.currently.temperature * 10 ) / 10 }}
+                        <span>&deg;C</span>
                     </div>
-                    <!-- <WeatherForecast class="fadeIn"></WeatherForecast> -->
+                    <div class="weather-text">
+                        <span>{{ currentweather.currently.summary }}</span>
+                        <br>
+                        <span class="under">Gevoelstemperatuur: {{ Math.round(currentweather.currently.apparentTemperature *10 ) / 10 }}&deg;C</span>
+                        <br>
+                        <span class="under">Wind: {{ Math.round(currentweather.currently.windSpeed) }} km/h | Windstoten: {{ Math.round(currentweather.currently.windGust) }}  km/h</span>
+                        <br>
+                        <!-- <span>Last updated: {{ timestamp(store.weather.currently.time * 1000, store.weather.timezone)}}</span>                 -->
+                    </div>
+                    <div class="forecast">
+                        <span>Voorspelingen:</span>
+                        <hr>
+                        <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
+                        <!-- <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span> -->
+                        <img class="forecast-icon" :src="require('../assets/icons/'+  item.icon +'.png')" alt="">
+                        <div class="weekname">
+                            Min: {{ Math.round(item.temperatureLow) }}<span>&deg;C</span> | Max: {{ Math.round(item.temperatureHigh) }}<span>&deg;C</span>
+                        </div>
+                        <hr class="hr-light">
+                        </div>
+                        <!-- <WeatherForecast class="fadeIn"></WeatherForecast> -->
+                    </div>
+                </div>          
+                <div class="icon">
+                    <img :src="require('../assets/icons/'+ currentweatherIcon +'.png')" alt="">
                 </div>
-            </div>          
-            <div class="icon">
-                <img :src="require('../assets/icons/'+ currentweatherIcon +'.png')" alt="">
-            </div>
-        </div>      
-    </div>
+            </div>      
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -75,10 +77,11 @@ export default {
             var url = 'https://api.darksky.net/forecast/' + variables.darkSkyApiKey + '/' + variables.latitude + ',' + variables.longitude + '/?units=' + variables.units + '&lang=' + variables.lang;
             axios.get(proxy + url)
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.currentweather = response.data;
                 this.currentweatherIcon = response.data.currently.icon;
                 this.longtermForecast = response.data.daily.data;
+                console.log("Updated Weather");
                 setTimeout(this.getData, 600000);
             })
             .catch(error => {
@@ -91,6 +94,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 .weather {
     display: flex;
     .data {
@@ -125,8 +134,6 @@ export default {
 }
 .weather {
   flex: 1;
-  margin-top: 16px;
-  padding-bottom: 16px;
   position: relative;
 
   @media(max-width: 850px) {

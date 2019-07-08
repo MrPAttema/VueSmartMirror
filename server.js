@@ -13,28 +13,25 @@
 // }).listen(8080);
 
 // 7368
+// index.js
+const cron = require("node-cron");
+const express = require("express");
+const fs = require("fs");
 
-var http = require('http');
+app = express();
 
-http.createServer(onRequest).listen(8081);
+// schedule tasks to be run on the server
+// cron.schedule("* * * * *", function () {
+//     console.log("---------------------");
+//     console.log("Running Cron Job");
+//     fs.unlink("./error.log", err => {
+//         if (err) throw err;
+//         console.log("Error file succesfully deleted");
+//     });
+// });
 
-function onRequest(client_req, client_res) {
-    console.log('serve: ' + client_req.url);
+cron.schedule("* * * * *", function () {
+    console.log("running a task every minute");
+});
 
-    var options = {
-        hostname: 'www.google.com',
-        port: 80,
-        path: client_req.url,
-        method: 'GET'
-    };
-
-    var proxy = http.request(options, function (res) {
-        res.pipe(client_res, {
-            end: true
-        });
-    });
-
-    client_req.pipe(proxy, {
-        end: true
-    });
-}
+app.listen("3128");

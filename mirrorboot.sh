@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/Projects/VueSmartMirror/
+# cd ~/Projects/VueSmartMirror/
 
 caddy &
 

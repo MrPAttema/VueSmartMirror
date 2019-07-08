@@ -57,7 +57,7 @@ export default {
               // }
               this.show = true;
               setTimeout(this.getNewsData, 120000);
-              console.log("Updated news");
+              console.log("Updated News");
             })
             .catch(error => {
                 setTimeout(this.getNewsData, 30000);

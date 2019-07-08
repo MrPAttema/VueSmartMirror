@@ -5,8 +5,8 @@
       <div class="icon">
         <WeatherIcon :icon="day.icon"></WeatherIcon>
       </div>
-      <strong>{{ Math.round(day.temperatureMax) }}°</strong>
-      <div>{{ Math.round(day.temperatureMin) }}°</div>
+      <strong>{{ Math.round(day.temperatureMax * 10 ) / 10 }}°</strong>
+      <div>{{ Math.round(day.temperatureMin * 10 ) / 10 }}°</div>
     </li>
   </ul>
 </template>
