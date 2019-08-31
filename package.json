@@ -11,17 +11,17 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "dotenv": "^6.1.0",
+    "axios": "^0.18.1",
+    "dotenv": "^6.2.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
-    "moment": "^2.22.2",
+    "moment": "^2.24.0",
     "node-cron": "^2.0.3",
-    "v-offline": "^1.0.10",
-    "vue": "^2.5.17",
+    "v-offline": "^1.1.0",
+    "vue": "^2.6.10",
     "vue-moment": "^4.0.0",
     "vue-svg-loader": "^0.11.0",
-    "vuex": "^3.0.1",
+    "vuex": "^3.1.1",
     "xml-to-json-promise": "0.0.3",
     "xml2js": "^0.4.19"
   },
@@ -38,13 +38,13 @@
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.11",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.12.0",
     "sass-loader": "^6.0.6",
     "url-loader": "^1.1.2",
     "vue-loader": "^13.7.3",
-    "vue-template-compiler": "^2.5.17",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.11.3"
+    "webpack-dev-server": "^2.11.5"
   },
   "main": "server.js",
   "repository": {
