@@ -20,7 +20,7 @@ NODE_TESTED="v8.11.1"
 ARM=$(uname -m) 
 
 # Check the Raspberry Pi version.
-if [ "$ARM" != "armv7l" ]; then
+if [ "$ARM" != "armv6l" ]; then
 	echo -e "\e[91mSorry, your Raspberry Pi is not supported."
 	echo -e "\e[91mPlease run VueSmartMirror on at least a Raspberry Pi 2 or higher."
 	echo -e "\e[91mIf this is a Pi Zero, you are in the same boat as the original Raspberry Pi. You must run in server only mode."
@@ -133,18 +133,18 @@ else
 fi
 
 # Use sample config for start VueSmartMirror
-cp config/config.js.sample config/config.js
+cp src/variables.example.js src/variables.js
 
 # Use pm2 control like a service VueSmartMirror
 read -p "Do you want use pm2 for auto starting of your VueSmartMirror (y/N)?" choice
 if [[ $choice =~ ^[Yy]$ ]]; then
     sudo npm install -g pm2
     sudo su -c "env PATH=$PATH:/usr/bin pm2 startup linux -u pi --hp /home/pi"
-    pm2 start ~/VueSmartMirror/installers/pm2_VueSmartMirror.json
+    pm2 start ~/VueSmartMirror/mirrorboot.sh
     pm2 save
 fi
 
 echo " "
-echo -e "\e[92mWe're ready! Run \e[1m\e[97mDISPLAY=:0 npm start\e[0m\e[92m from the ~/VueSmartMirror directory to start your VueSmartMirror.\e[0m"
+echo -e "\e[92mWe're ready! Run \e[1m\e[97mmirrorboot.sh\e[0m\e[92m from the ~/VueSmartMirror directory to start your VueSmartMirror.\e[0m"
 echo " "
 echo " "
