@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Specify an app name
 --name <VueSmartMirror>
 
 # Set memory threshold for app reload
 --max-memory-restart <200MB>
-
 
 # Delay between automatic restarts
 --restart-delay <1000>

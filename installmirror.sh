@@ -14,7 +14,7 @@ echo '    \/   \__,_| \___||_____/ |_| |_| |_| \__,_||_|    \__||_|  |_||_||_|  
 echo -e "\e[0m"
 
 # Define the tested version of Node.js.
-NODE_TESTED="v8.11.1"
+NODE_TESTED="v8.16.1"
 
 # Determine which Pi is running.
 ARM=$(uname -m) 
@@ -85,6 +85,16 @@ if $NODE_INSTALL; then
 	curl -sL https://deb.nodesource.com/setup_$NODE_STABLE_BRANCH | sudo -E bash -
 	sudo apt-get install -y nodejs
 	echo -e "\e[92mNode.js installation Done!\e[0m"
+fi
+
+# Install or upgrade node if necessary.
+if $NPM_INSTALL; then
+	
+	echo -e "\e[96mInstalling NPM.js ...\e[90m"
+	
+	curl -O https://npmjs.org/install.sh | sudo -E bash -
+	sudo sh install.sh -y
+	echo -e "\e[92mNPM installation Done!\e[0m"
 fi
 
 # Install VueSmartMirror
