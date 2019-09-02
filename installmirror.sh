@@ -20,12 +20,12 @@ NODE_TESTED="v8.11.1"
 ARM=$(uname -m) 
 
 # Check the Raspberry Pi version.
-if [ "$ARM" != "armv5l" ]; then
-	echo -e "\e[91mSorry, your Raspberry Pi is not supported."
-	echo -e "\e[91mPlease run VueSmartMirror on at least a Raspberry Pi 2 or higher."
-	echo -e "\e[91mIf this is a Pi Zero, you are in the same boat as the original Raspberry Pi. You must run in server only mode."
-	exit;
-fi
+# if [ "$ARM" != "armv5l" ]; then
+# 	echo -e "\e[91mSorry, your Raspberry Pi is not supported."
+# 	echo -e "\e[91mPlease run VueSmartMirror on at least a Raspberry Pi 2 or higher."
+# 	echo -e "\e[91mIf this is a Pi Zero, you are in the same boat as the original Raspberry Pi. You must run in server only mode."
+# 	exit;
+# fi
 
 # Define helper methods.
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
