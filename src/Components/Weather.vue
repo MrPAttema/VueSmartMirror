@@ -14,7 +14,7 @@
                         <br>
                         <span class="under">Wind: {{ Math.round(currentweather.currently.windSpeed) }} km/h | Windstoten: {{ Math.round(currentweather.currently.windGust) }}  km/h</span>
                         <br>
-                        <!-- <span>Last updated: {{ timestamp(store.weather.currently.time * 1000, store.weather.timezone)}}</span>                 -->
+                        <!-- <span>Last updated: {{ timestamp(store.weather.currently.time * 1000, store.weather.timezone)}}</span> -->
                     </div>
                     <div class="forecast">
                         <span>Weersverwachting:</span>

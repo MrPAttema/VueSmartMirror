@@ -27,7 +27,7 @@ export default new Vuex.Store({
     icon: '',
     inputQuery: null,
     locationIcon: 'search',
-    versionNumber: '1.2.2',
+    versionNumber: '1.3.0',
     versionNumberAdd: '20191227',
     updating: false,
     // units: units

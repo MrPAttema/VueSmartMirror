@@ -128,7 +128,7 @@ body, html {
   color: white;
 }
 .sys-info {
-  color: rgb(85, 85, 85);
+  color: rgb(146, 146, 146);
 }
 
 .grid-container {
