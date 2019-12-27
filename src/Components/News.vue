@@ -1,5 +1,6 @@
 <template>
-  <transition enter-active-class="animated fadeIn">
+  <transition>
+  <!-- <transition enter-active-class="animated fadeIn"> -->
     <div v-if="show == true" class="grid-item" >
         <div class="news">
             <span>RTL Nieuws:</span>
@@ -10,7 +11,7 @@
                 </div>
                 <span v-bind:style="{ opacity: opacity }">{{ item.title }}</span>
             </div>
-        </div>      
+        </div>
     </div>
   </transition>
 </template>
@@ -62,7 +63,7 @@ export default {
             .catch(error => {
                 setTimeout(this.getNewsData, 30000);
                 console.log(error)
-                console.log("Error: Updating news failed, trying again in 30sec.");            
+                console.log("Error: Updating news failed, trying again in 30sec.");
             })
         }
     }

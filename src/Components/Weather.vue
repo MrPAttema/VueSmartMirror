@@ -1,5 +1,5 @@
 <template>
-    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+    <transition>
         <div class="grid-item">
             <div class="weather">
                 <div class="data">
@@ -17,7 +17,7 @@
                         <!-- <span>Last updated: {{ timestamp(store.weather.currently.time * 1000, store.weather.timezone)}}</span>                 -->
                     </div>
                     <div class="forecast">
-                        <span>Voorspelingen:</span>
+                        <span>Weersverwachting:</span>
                         <hr>
                         <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
                         <!-- <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span> -->
@@ -29,11 +29,11 @@
                         </div>
                         <!-- <WeatherForecast class="fadeIn"></WeatherForecast> -->
                     </div>
-                </div>          
+                </div>
                 <div class="icon">
                     <img :src="require('../assets/icons/'+ currentweatherIcon +'.png')" alt="">
                 </div>
-            </div>      
+            </div>
         </div>
     </transition>
 </template>
@@ -59,7 +59,7 @@ export default {
             currentweatherIcon: '',
             currentTemprature: '',
             forecast: [],
-            forecastday: [], 
+            forecastday: [],
             longtermForecast: [],
             location: [],
             degreeLabel: '',
@@ -176,7 +176,6 @@ span.weekname {
     display: inline;
     top: -20px;
     position: relative;
-    
     font-size: 1em;
 }
 .hr-light {
