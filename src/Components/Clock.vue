@@ -31,10 +31,10 @@ export default {
             setTimeout(this.updateCurrentTime, 1000);
         }
     },
-    created() {  
-        moment.locale('nl')  
+    created() {
+        moment.locale('nl');
         this.updateCurrentTime();
-    }  
+    }
 }
 </script>
 

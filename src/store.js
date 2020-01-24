@@ -27,8 +27,8 @@ export default new Vuex.Store({
     icon: '',
     inputQuery: null,
     locationIcon: 'search',
-    versionNumber: '1.3.0',
-    versionNumberAdd: '20191227',
+    versionNumber: '1.3.2',
+    versionNumberAdd: '20200124',
     updating: false,
     // units: units
   },
@@ -87,8 +87,7 @@ export default new Vuex.Store({
       .then(response => {
         var parseString = require('xml2js').parseString;
         var xml = response.data;
-        var self = this;
-        parseString(xml, function (err, result) {
+        parseString(xml, function(err, result) {
           message = result.rss.channel[0].item[0].title[0];
           if (message.includes('groen')) {
             code = 0;
@@ -125,7 +124,6 @@ export default new Vuex.Store({
       var url = 'https://api.darksky.net/forecast/' + variables.darkSkyApiKey + '/' + variables.latitude + ',' + variables.longitude + '/?units=' + variables.units + '&lang=' + variables.lang;
       axios.get(proxy + url)
       .then(response => {
-        console.log(response.data);
         // this.currentweather = response.data;
         // this.currentweatherIcon = response.data.currently.icon;
         // this.longtermForecast = response.data.daily.data;

@@ -14,7 +14,6 @@
 <script>
   import WeatherIcon from './WeatherIcon'
   import moment from 'moment'
-  // import 'moment-timezone'
 
   export default {
     name: 'forecast',

@@ -8,6 +8,8 @@ Vue.filter('capitalize', function (value) {
     return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
+Vue.use(require('vue-moment'));
+
 new Vue({
     store,
     el: '#home',

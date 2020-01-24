@@ -20,7 +20,7 @@
                         <span>Weersverwachting:</span>
                         <hr>
                         <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
-                        <!-- <span class="weekname">{{ moment(item.time).format("DD MMM YYYY") }}:</span> -->
+                        <span class="weekday">{{ item.time | moment('ddd') }}:</span>
                         <img class="forecast-icon" :src="require('../assets/icons/'+  item.icon +'.png')" alt="">
                         <div class="weekname">
                             Min: {{ Math.round(item.temperatureLow) }}<span>&deg;C</span> | Max: {{ Math.round(item.temperatureHigh) }}<span>&deg;C</span>
@@ -40,7 +40,7 @@
 
 <script>
 
-import moment from 'moment'
+import moment from 'moment';
 import axios from 'axios'
 import variables from '../variables'
 import store from "../store";
@@ -67,6 +67,9 @@ export default {
             daytime: '',
             maxNumberOfDays: 7,
         }
+    },
+    created() {
+        moment.locale('nl');
     },
     mounted(){
         this.getData();
@@ -171,6 +174,13 @@ span.weekname {
     width: 150px;
     position: relative;
     font-weight: 500;
+}
+.weekday {
+    display: inline;
+    min-width: 40px;
+    top: -20px;
+    position: relative;
+    font-size: 1em;
 }
 .weekname {
     display: inline;

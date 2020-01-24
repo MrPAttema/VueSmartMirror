@@ -38,7 +38,7 @@ export default {
 	}
 	.special-messages {
 		height: 50px;
-		padding: 0px 10px;      
+		padding: 0px 10px;
 		color: black;
 		margin: 0 auto;
 		overflow: hidden;
@@ -63,7 +63,7 @@ export default {
 	.message {
 		line-height: 50px;
 		font-size: 17px;
-		font-weight: 600;       
+		font-weight: 600;
 	}
 	.notify-icon {
 		height: 50px;
