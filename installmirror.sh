@@ -20,7 +20,7 @@ NODE_TESTED="v8.16.1"
 ARM=$(uname -m) 
 
 # Check the Raspberry Pi version.
-if [ "$ARM" != "armv6l" ]; then
+if [ "$ARM" != "armv5l" ]; then
 	echo -e "\e[91mSorry, your Raspberry Pi is not supported."
 	echo -e "\e[91mPlease run VueSmartMirror on at least a Raspberry Pi 2 or higher."
 	echo -e "\e[91mIf this is a Pi Zero, you are in the same boat as the original Raspberry Pi. You must run in server only mode."
@@ -31,9 +31,25 @@ fi
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
 function command_exists() { type "$1" &> /dev/null ;}
 
+sudo raspi-config
+
 # Update before first apt-get
 echo -e "\e[96mUpdating packages ...\e[90m"
 sudo apt-get update || echo -e "\e[91mUpdate failed, carrying on installation ...\e[90m"
+
+sudo apt-get install chromium-browser unclutter xscreensaver xautomation
+
+# [Desktop Entry]
+# Version=1.0
+# Type=Application
+# Name=unclutter
+# Exec=unclutter -idle 1 -root
+# Terminal=false
+# StartupNotify=false
+sudo nano ~/.config/autostart/unclutter.desktop
+
+# Configure xscreensaver put the following in the file; mode: off
+sudo nano ~/.xscreensaver
 
 # Installing helper tools
 echo -e "\e[96mInstalling helper tools ...\e[90m"
