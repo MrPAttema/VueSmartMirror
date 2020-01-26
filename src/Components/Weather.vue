@@ -20,7 +20,7 @@
                         <span>Weersverwachting:</span>
                         <hr>
                         <div class="longtermForecast" :longtermForecast="longtermForecast" v-for="item in longtermForecast.slice(1,5)" :key="item.id">
-                        <span class="weekday">{{ item.time | moment.locale('nl').format('ddd') }}:</span>
+                        <span class="weekday">{{ item.time | moment('ddd') }}:</span>
                         <img class="forecast-icon" :src="require('../assets/icons/'+  item.icon +'.png')" alt="">
                         <div class="weekname">
                             Min: {{ Math.round(item.temperatureLow) }}<span>&deg;C</span> | Max: {{ Math.round(item.temperatureHigh) }}<span>&deg;C</span>
