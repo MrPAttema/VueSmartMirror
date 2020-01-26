@@ -13,3 +13,4 @@ variables.js
 *.sln
 src/variables.js
 src/variables.js.bak
+package-lock.json

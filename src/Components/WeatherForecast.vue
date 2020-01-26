@@ -27,7 +27,7 @@
     },
     methods: {
       dayOfWeek (time, zone) {
-        return moment(time).tz(zone).format('ddd')
+        return moment(time).format('ddd');
       }
     }
   }

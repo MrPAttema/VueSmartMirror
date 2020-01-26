@@ -87,7 +87,7 @@ export default new Vuex.Store({
       .then(response => {
         var parseString = require('xml2js').parseString;
         var xml = response.data;
-        parseString(xml, function(err, result) {
+        parseString(xml, function(result) {
           message = result.rss.channel[0].item[0].title[0];
           if (message.includes('groen')) {
             code = 0;
