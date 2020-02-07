@@ -30,7 +30,7 @@
                 <div class="sys-info">
                   v{{ this.$store.state.versionNumber }} ({{ this.$store.state.versionNumberAdd }})
                   <div v-if="this.$store.state.updating" class="updater">
-                    -- <div class="loader"></div> 
+                    -- <div class="loader"></div>
                     Zoeken naar updates
                   </div>
                 </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="region bottom right">
               <div class="container">
-                
+
               </div>
           </div>
         </div>
@@ -107,8 +107,8 @@ body, html {
 
 .loader {
   margin-top: 3px;
-  border: 4px solid #707070; 
-  border-top: 4px solid #929292; 
+  border: 4px solid #707070;
+  border-top: 4px solid #929292;
   border-radius: 50%;
   width: 10px;
   height: 10px;

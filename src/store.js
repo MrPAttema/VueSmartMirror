@@ -89,22 +89,30 @@ export default new Vuex.Store({
         var xml = response.data;
         parseString(xml, function(error, result) {
           message = result.rss.channel[0].item[0].title[0];
-          if (message.includes('groen')) {
-            code = 0;
-          } else if (message.includes('geel')) {
-            code = 1;
-          } else if (message.includes('oranje')) {
-            code = 2;
-          } else if (message.includes('rood')){
-            code = 3;
+          if (message != '') {
+            if (message.includes('groen')) {
+              code = 0;
+            } else if (message.includes('geel')) {
+              code = 1;
+            } else if (message.includes('oranje')) {
+              code = 2;
+            } else if (message.includes('rood')){
+              code = 3;
+            } else {
+              code = 4;
+            }
+            commit('setNotificationStatus', {
+              state: 'loaded',
+              message: message,
+              code: code,
+            })
           } else {
-            code = 4;
+            commit('setNotificationStatus', {
+              state: 'loaded',
+              message: null,
+              code: null,
+            })
           }
-          commit('setNotificationStatus', {
-            state: 'loaded',
-            message: message,
-            code: code,
-          })
         });
         console.log("Updated KNMI");
         setTimeout(this.getNotificationData, 60000);
