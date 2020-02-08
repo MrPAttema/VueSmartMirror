@@ -115,15 +115,18 @@ export default new Vuex.Store({
           }
         });
         console.log("Updated KNMI");
-        setTimeout(this.getNotificationData, 60000);
+        setTimeout(() => {
+          commit('getNotificationData')
+        }, 60000)
       })
       .catch(error => {
-        setTimeout(this.getNotificationData, 30000);
-        commit('setNotificationStatus', {
-          state: 'loaded',
-          message: 'Fout bij KNMI update, volgende poging in 30 seconden.',
-          code: 4,
-        })
+        setTimeout(() => {
+          commit('getNotificationData'), {
+            state: 'loaded',
+            message: 'Fout bij KNMI update, volgende poging in 30 seconden.',
+            code: 4,
+          }
+        }, 30000)
       })
     },
 
