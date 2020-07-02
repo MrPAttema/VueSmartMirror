@@ -82,7 +82,7 @@ export default {
       // this.$store.dispatch('weather').then(() => {
       //   this.$store.dispatch('appStatus', {state: 'loaded'})
       // })
-      this.$store.dispatch('getNotificationData').then(() => {
+      this.$store.dispatch('notificationData').then(() => {
         this.$store.dispatch('appStatus', {state: 'loaded'})
       })
     },

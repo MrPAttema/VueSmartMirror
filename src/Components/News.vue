@@ -61,7 +61,7 @@ export default {
               console.log("Updated News");
             })
             .catch(error => {
-                setTimeout(this.getNewsData, 30000);
+                setTimeout(this.getNewsData, 360000);
                 console.log(error)
                 console.log("Error: Updating news failed, trying again in 30sec.");
             })

@@ -27,8 +27,8 @@ export default new Vuex.Store({
     icon: '',
     inputQuery: null,
     locationIcon: 'search',
-    versionNumber: '1.3.3',
-    versionNumberAdd: '20200217',
+    versionNumber: '1.4.0',
+    versionNumberAdd: '20200702',
     updating: false,
     // units: units
   },
@@ -79,7 +79,7 @@ export default new Vuex.Store({
       })
     },
 
-    getNotificationData({ commit }) {
+    notificationData({ commit }) {
       var message = null;
       var code = null;
       var proxy = 'https://quiet-fjord-46740.herokuapp.com/';
@@ -101,13 +101,13 @@ export default new Vuex.Store({
             } else {
               code = 4;
             }
-            commit('setNotificationStatus', {
+            commit('setNotificationData', {
               state: 'loaded',
               message: message,
               code: code,
             })
           } else {
-            commit('setNotificationStatus', {
+            commit('setNotificationData', {
               state: 'loaded',
               message: null,
               code: null,
@@ -116,17 +116,16 @@ export default new Vuex.Store({
         });
         console.log("Updated KNMI");
         setTimeout(() => {
-          commit('getNotificationData')
-        }, 60000)
+          commit('setNotificationData')
+        }, 10000)
       })
       .catch(error => {
-        setTimeout(() => {
-          commit('getNotificationData'), {
-            state: 'loaded',
-            message: 'Fout bij KNMI update, volgende poging in 30 seconden.',
-            code: 4,
-          }
-        }, 30000)
+        setTimeout(this.notificationData, 30000);
+        commit('setNotificationData'), {
+          state: 'loaded',
+          message: 'Fout bij KNMI update, volgende poging in 30 seconden.',
+          code: 4,
+        }
       })
     },
 
@@ -152,8 +151,8 @@ export default new Vuex.Store({
       })
     },
 
-    notificationData({ commit }, notificationData) {
-      commit('setnotificationData', notificationData)
+    notificationData({ commit }, state) {
+      commit('setNotificationData', state)
     },
 
     googleMapsLoaded({ commit }, googleMapsLoaded) {
@@ -183,10 +182,10 @@ export default new Vuex.Store({
       state.appStatus.message = appStatus.message
     },
 
-    setNotificationStatus: (state, notificationData, code) => {
-      state.notificationData.state = notificationData.state
-      state.notificationData.message = notificationData.message
-      state.notificationData.code = notificationData.code
+    setNotificationData: (state, notificationData) => {
+      state.notificationData.state = notificationData
+      state.notificationData.message = notificationData
+      state.notificationData.code = notificationData
     },
 
     setCoordinates: (state, coordinates) => {
