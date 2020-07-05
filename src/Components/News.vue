@@ -17,9 +17,11 @@
 </template>
 
 <script>
-import axios from 'axios'
-import store from '../store'
-import variables from '../variables'
+import axios from 'axios';
+import store from '../store';
+import variables from '../variables';
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI(variables.newsApiKey);
 
 export default {
    name: 'news',
@@ -38,32 +40,19 @@ export default {
     methods: {
         getNewsData() {
             this.show = false;
-            const url = 'https://newsapi.org/v2/top-headlines?sources='+ variables.newsApiSource +'&apiKey='+ variables.newsApiKey;
-            axios.get(url)
-            .then(response => {
-              this.articles = response.data.articles
-              // for (var item in this.articles) {
-              //     if (this.fade == true && this.fadePoint < 1) {
-              //         if (this.fadePoint < 0) {
-              //             this.fadePoint = 0;
-              //         }
-              //         var startingPoint = this.articles.length * this.fadePoint;
-              //         var steps = this.articles.length - startingPoint;
-              //         if (item >= startingPoint) {
-              //           var currentStep = item - startingPoint;
-              //           var opacity = 1 - (1 / steps * currentStep);
-              //           console.log(opacity)
-              //         }
-              //     }
-              // }
-              this.show = true;
-              setTimeout(this.getNewsData, 120000);
-              console.log("Updated News");
+            newsapi.v2.topHeadlines({
+                sources: 'rtl-nieuws',
+                language: 'nl',
+            }).then(response => {
+                this.articles = response.articles
+                this.show = true;
+                setTimeout(this.getNewsData, 600000);
+                console.log("Updated News");
             })
             .catch(error => {
-                setTimeout(this.getNewsData, 360000);
+                setTimeout(this.getNewsData, 600000);
                 console.log(error)
-                console.log("Error: Updating news failed, trying again in 30sec.");
+                console.log("Error: Updating news failed, trying again in 10 min.");
             })
         }
     }
