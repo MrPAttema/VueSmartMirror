@@ -27,7 +27,7 @@ export default {
     methods: {
         updateCurrentTime() {
             this.currentTime = moment().format('LTS');
-            this.currentDay = moment().format('dddd, D MMMM YYYY');
+            this.currentDay = moment() .format('dddd, D MMMM YYYY');
             setTimeout(this.updateCurrentTime, 1000);
         }
     },
