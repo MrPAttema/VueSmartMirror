@@ -40,11 +40,27 @@ export default {
     methods: {
         getNewsData() {
             this.show = false;
-            newsapi.v2.topHeadlines({
-                sources: 'rtl-nieuws',
-                language: 'nl',
-            }).then(response => {
-                this.articles = response.articles
+            const url = 'https://newsapi.org/v2/top-headlines?sources='+ variables.newsApiSource +'&apiKey='+ variables.newsApiKey;
+            axios.defaults.baseURL = 'https://smart.patrickattema.nl';
+            axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.get(url)
+            .then(response => {
+                console.log(response);
+                this.articles = response.data.articles
+            //   for (var item in this.articles) {
+            //       if (this.fade == true && this.fadePoint < 1) {
+            //           if (this.fadePoint < 0) {
+            //               this.fadePoint = 0;
+            //           }
+            //           var startingPoint = this.articles.length * this.fadePoint;
+            //           var steps = this.articles.length - startingPoint;
+            //           if (item >= startingPoint) {
+            //             var currentStep = item - startingPoint;
+            //             var opacity = 1 - (1 / steps * currentStep);
+            //             console.log(opacity)
+            //           }
+            //       }
+            //   }
                 this.show = true;
                 setTimeout(this.getNewsData, 600000);
                 console.log("Updated News");
@@ -52,7 +68,7 @@ export default {
             .catch(error => {
                 setTimeout(this.getNewsData, 600000);
                 console.log(error)
-                console.log("Error: Updating news failed, trying again in 10 min.");
+                console.log("Error: Updating news failed, trying again in 30sec.");
             })
         }
     }
