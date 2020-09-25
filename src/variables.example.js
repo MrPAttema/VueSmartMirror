@@ -1,4 +1,4 @@
-rconst variables = {
+const variables = {
     /*
         Insert here all your details about weather and metrics.
         All details can be found at https://www.wunderground.com/weather/api/d/docs.

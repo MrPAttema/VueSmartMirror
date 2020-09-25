@@ -29,7 +29,7 @@ export default {
         return {
             articles: [],
             fade: true,
-            fadePoint: 0.25, // Start on 1/4th of the list.
+            fadePoint: 0, // Start on 1/4th of the list.
             show: false,
             opacity: 1,
         }
@@ -40,27 +40,30 @@ export default {
     methods: {
         getNewsData() {
             this.show = false;
-            const url = 'https://newsapi.org/v2/top-headlines?sources='+ variables.newsApiSource +'&apiKey='+ variables.newsApiKey;
+            const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+            const url = proxyUrl + 'https://newsapi.org/v2/top-headlines?sources='+ variables.newsApiSource +'&apiKey='+ variables.newsApiKey;
             axios.defaults.baseURL = 'https://smart.patrickattema.nl';
             axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
             axios.get(url)
             .then(response => {
-                console.log(response);
-                this.articles = response.data.articles
-            //   for (var item in this.articles) {
-            //       if (this.fade == true && this.fadePoint < 1) {
-            //           if (this.fadePoint < 0) {
-            //               this.fadePoint = 0;
-            //           }
-            //           var startingPoint = this.articles.length * this.fadePoint;
-            //           var steps = this.articles.length - startingPoint;
-            //           if (item >= startingPoint) {
-            //             var currentStep = item - startingPoint;
-            //             var opacity = 1 - (1 / steps * currentStep);
-            //             console.log(opacity)
-            //           }
-            //       }
-            //   }
+                this.articles = response.data.articles;
+                // this.data.forEach(element => {
+                //     var item = element;
+                //     if (this.fade == true && this.fadePoint < 1) {
+                //         if (this.fadePoint < 0) {
+                //             this.fadePoint = 0;
+                //         }
+                //         var startingPoint = this.articles.length * this.fadePoint;
+                //         var steps = this.articles.length - startingPoint;
+                //         if (item >= startingPoint) {
+                //             var currentStep = item - startingPoint;
+                //             var opacity = 1 - (1 / steps * currentStep);
+                //         }
+                //     }
+                //     console.log(item);
+                //     item.push({opacity: opacity});
+                //     this.articles.push(item);
+                // });
                 this.show = true;
                 setTimeout(this.getNewsData, 600000);
                 console.log("Updated News");
