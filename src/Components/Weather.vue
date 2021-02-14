@@ -51,13 +51,12 @@ import WeatherForecast from './WeatherForecast'
 export default {
     name: 'weather',
     components: {
-      WeatherForecast,
+        WeatherForecast,
     },
     data() {
         return {
             currentweather: {},
             currentweatherIcon: '',
-            currentTemprature: '',
             forecast: [],
             forecastday: [],
             longtermForecast: [],

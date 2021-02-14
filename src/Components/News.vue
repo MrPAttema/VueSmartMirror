@@ -18,7 +18,6 @@
 
 <script>
 import axios from 'axios';
-import store from '../store';
 import variables from '../variables';
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(variables.newsApiKey);
@@ -40,7 +39,7 @@ export default {
     methods: {
         getNewsData() {
             this.show = false;
-            const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+            const proxyUrl = 'https://quiet-fjord-46740.herokuapp.com/'
             const url = proxyUrl + 'https://newsapi.org/v2/top-headlines?sources='+ variables.newsApiSource +'&apiKey='+ variables.newsApiKey;
             axios.defaults.baseURL = 'https://smart.patrickattema.nl';
             axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';

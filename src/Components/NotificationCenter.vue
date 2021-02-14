@@ -1,12 +1,12 @@
 <template>
 	<transition enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
-		<div v-if="store.notificationData.state === 'loaded' && store.notificationData.code >= 1" class="notify-container">
+		<div v-if="code >= 1" class="notify-container">
 			<div class="special-messages">
 				<div class="notify-icon">
 					<img :src="require('../assets/icons/alert_normal.svg')" alt="">
 				</div>
-				<div class="notify-message" v-bind:class="{ yellow: store.notificationData.code === 1, orange: store.notificationData.code === 2, red: store.notificationData.code === 3 }">
-					<span class="message">{{ store.notificationData.message }}</span>
+				<div class="notify-message" v-bind:class="{ yellow: code === 1, orange: code === 2, red: code === 3 }">
+					<span class="message">{{ notification }}</span>
 				</div>
 			</div>
 		</div>
@@ -15,13 +15,57 @@
 
 <script>
 import axios from 'axios';
+
 export default {
-  name: 'NotificationCenter',
-  computed: {
-    store () {
-      return this.$store.state
+  	name: 'NotificationCenter',
+    data() {
+        return {
+            code: '',
+			notification: '',
+            show: false,
+        }
+    },
+	mounted(){
+        this.notificationData();
+	},
+    methods: {
+        notificationData() {
+            var proxy = 'https://quiet-fjord-46740.herokuapp.com/';
+            var url = 'https://cdn.knmi.nl/knmi/xml/rss/rss_KNMIwaarschuwingen.xml';
+			axios.defaults.headers.common['X-Requested-With'] = 'application/rss+xml';
+            axios.get(proxy + url)
+            .then(response => {
+                var parseString = require('xml2js').parseString;
+                var xml = response.data;
+				var self = this;
+                parseString(xml, function(error, result) {
+					self.notification = result.rss.channel[0].item[0].title[0];
+					if (self.notification != '') {
+						if (self.notification.includes('groen')) {
+							self.code = 0;
+						} else if (self.notification.includes('geel')) {
+							self.code = 1;
+						} else if (self.notification.includes('oranje')) {
+							self.code = 2;
+						} else if (self.notification.includes('rood')){
+							self.code = 3;
+						} else {
+							self.code = 4;
+						}
+					}
+				});
+				setTimeout(this.notificationData, 600000);
+                console.log("Updated KNMI");
+            })
+            .catch(error => {
+				console.log(error);
+                setTimeout(this.notificationData, 30000);
+                this.notification = 'Fout bij KNMI update, volgende poging in 30 seconden.';
+                this.code = 4;
+                console.log("Error: Updating KNMI failed, trying again in 30sec.");
+            })
+        }
     }
-  },
 }
 </script>
 

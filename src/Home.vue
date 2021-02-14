@@ -50,9 +50,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import variables from './variables'
-
 import NotificationCenter from './Components/NotificationCenter.vue';
 import Weather from './Components/Weather.vue';
 import News from './Components/News.vue';
@@ -82,9 +79,9 @@ export default {
       // this.$store.dispatch('weather').then(() => {
       //   this.$store.dispatch('appStatus', {state: 'loaded'})
       // })
-      this.$store.dispatch('notificationData').then(() => {
-        this.$store.dispatch('appStatus', {state: 'loaded'})
-      })
+      // this.$store.dispatch('notificationData').then(() => {
+      //   this.$store.dispatch('appStatus', {state: 'loaded'})
+      // })
     },
   },
 }
