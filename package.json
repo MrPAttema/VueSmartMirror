@@ -39,7 +39,7 @@
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.11",
-    "node-sass": "^4.10.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^6.0.6",
     "url-loader": "^1.1.2",
     "vue-loader": "https://github.com/graux/vue-loader#a0d6b77",
